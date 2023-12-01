@@ -1,0 +1,17 @@
+yarn init
+
+yarn add express// thư viện
+
+yarn add nodemon --dev //debug
+
+//add git
+git init
+tạo file .gitignore
+
+và thêm vào
+.vscode
+node_modules/
+
+git add
+git commit -m "hello world"
+git remote add origin link
