@@ -14,4 +14,37 @@ node_modules/
 
 git add
 git commit -m "hello world"
+git checkout -b main
 git remote add origin link
+git push -u origin main
+
+
+thu vien morgan xem log khi gửi request lên server
+yarn add morgan --dev
+const morgan = require('morgan')
+app.use(morgan('combined', {
+    skip: function (req, res) { return res.statusCode < 400 }
+}))
+
+
+// caif handlebar
+https://handlebarsjs.com/installation/
+yarn add handlebars --dev
+
+//cai express-handlebars
+yarn add express-handlebars --dev
+
+//render scss ra css
+yarn add node-sass --dev
+
+
+src quanr lý dự án
+src/public file tĩnh ...img..font
+
+
+src/resources
+chứa view chứa routes chứa scss
+
+
+// format code
+yarn add prettier lint-staged husky --dev
