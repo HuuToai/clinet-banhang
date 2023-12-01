@@ -6,7 +6,6 @@
   "author": "HuuToai",
   "license": "MIT",
   "scripts": {
-    "beautiful": "lint-staged",
     "start": "nodemon --inspect src/index.js ",
     "watch": "node-sass --watch src/resources/scss/ -o src/public/css/"
   },
