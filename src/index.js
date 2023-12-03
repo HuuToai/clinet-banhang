@@ -10,33 +10,30 @@ const port = 3000;
 // const methodOverride = require("method-override");
 
 app.use(
-  express.urlencoded({
-    extended: true,
-  }),
+    express.urlencoded({
+        extended: true,
+    }),
 );
 app.use(express.json()); //XMLhttprequest fetch axios
 // app.use(methodOverride("_method")); dùng để sửa các phương thức lúc delete put của caác form
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 //http logger
-app.use(                        morgan('combined'));
+app.use(morgan('combined'));
 
 //template engine
 app.engine(
-  'hbs',
-                  engine({
-                    extname: '.hbs',
-                  }),
+    'hbs',
+    engine({
+        extname: '.hbs',
+    }),
 );
 app.set('view engine', 'hbs');
 
-app.set('views', path.join(__dirname, 'resources', 'views')); //sửa lại nếu máy mac /
+app.set('views', path.join(__dirname,
+    'resources', 'views')); //sửa lại nếu máy mac /
 //router init
-                route(app);
+route(app);
 app.listen(port, () =>
-  console.log(`Example app 
-  
-  
-  
-  listening at http://localhost:${port}`),
+    console.log(`Example app listening at http://localhost:${port}`),
 );
