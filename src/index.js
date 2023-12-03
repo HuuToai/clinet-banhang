@@ -16,10 +16,12 @@ app.use(
 );
 app.use(express.json()); //XMLhttprequest fetch axios
 // app.use(methodOverride("_method")); dùng để sửa các phương thức lúc delete put của caác form
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname,
+    "public")));
 
 //http logger
-app.use(morgan('combined'));
+app.use(morgan(
+    'combined'));
 
 //template engine
 app.engine(
@@ -28,7 +30,8 @@ app.engine(
         extname: '.hbs',
     }),
 );
-app.set('view engine', 'hbs');
+app.set('view engine',
+    'hbs');
 
 app.set('views', path.join(__dirname,
     'resources', 'views')); //sửa lại nếu máy mac /
