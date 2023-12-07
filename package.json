@@ -6,7 +6,7 @@
   "author": "HuuToai",
   "license": "MIT",
   "scripts": {
-    "beautyful": "prettier --single-quote --trailing-comma all --tab-width 4 --write 'src/**/*.{js,jsx,json,css,scss,html}'",
+    "beautyful": "lint-staged",
     "start": "nodemon --inspect src/index.js ",
     "watch": "node-sass --watch src/resources/scss/ -o src/public/css/"
   },
