@@ -8,7 +8,8 @@
   "scripts": {
     "beautyful": "lint-staged",
     "start": "nodemon --inspect src/index.js ",
-    "watch": "node-sass --watch src/resources/scss/ -o src/public/css/"
+    "watch": "node-sass --watch src/resources/scss/ -o src/public/css/",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,css,scss,html}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
@@ -28,15 +29,18 @@
     "sequelize": "^6.35.1"
   },
   "devDependencies": {
+    "body-parser": "^1.20.2",
     "connect-flash": "^0.1.1",
     "crypto": "^1.0.1",
     "express-handlebars": "^7.1.2",
     "express-toastr": "^2.0.2",
+    "express-validator": "^7.0.1",
     "handlebars": "^4.7.8",
     "husky": "^8.0.3",
     "lint-staged": "^15.1.0",
     "method-override": "^3.0.0",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "node-sass": "^9.0.0",
     "nodemon": "^3.0.2",
     "prettier": "^3.1.0"
