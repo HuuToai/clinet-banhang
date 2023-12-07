@@ -48,3 +48,22 @@ chứa view chứa routes chứa scss
 
 // format code
 yarn add prettier lint-staged husky --dev
+
+
+caif mysql
+ yarn add mysql2 express-session --dev
+yarn add sequelize mysql2
+
+yarn add md5
+
+yarn add express-session
+
+
+yarn add method-override --dev
+
+
+yarn add connect-flash --dev
+
+yarn add express-toastr --dev
+
+yarn add react-toastify --dev

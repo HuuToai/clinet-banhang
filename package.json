@@ -11,29 +11,34 @@
     "watch": "node-sass --watch src/resources/scss/ -o src/public/css/"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json,css,scss,html}": [
-      "prettier --single-quote --trailing-comma all --tab-width 4 --write",
-      "git add"
-    ]
+    "src/**/*.{js,jsx,json,css,scss,html}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "lint-staged"
     }
   },
-
   "dependencies": {
     "eslint": "^8.54.0",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "md5": "^2.3.0",
+    "mysql2": "^3.6.5",
+    "sequelize": "^6.35.1"
   },
   "devDependencies": {
+    "connect-flash": "^0.1.1",
+    "crypto": "^1.0.1",
     "express-handlebars": "^7.1.2",
+    "express-toastr": "^2.0.2",
     "handlebars": "^4.7.8",
     "husky": "^8.0.3",
     "lint-staged": "^15.1.0",
+    "method-override": "^3.0.0",
     "morgan": "^1.10.0",
     "node-sass": "^9.0.0",
-    "nodemon": "^3.0.1",
+    "nodemon": "^3.0.2",
     "prettier": "^3.1.0"
   }
 }

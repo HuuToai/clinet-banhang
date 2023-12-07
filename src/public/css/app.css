@@ -1,4 +1,4 @@
-.card-course-item {
+.card-admin-item {
     padding-top: 16px !important;
 }
 
@@ -9,13 +9,13 @@
     margin-right: 4px;
 }
 
-.btn-create-courses {
+.btn-create-admins {
     position: relative;
     width: 100%;
     height: 40px;
 }
 
-.create-courses {
+.create-admins {
     position: absolute;
     right: 0;
 }

@@ -1,0 +1,48 @@
+<!-- ============================================================== -->
+<!-- Start Page Content here -->
+<!-- ============================================================== -->
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start container-fluid -->
+        <div class="container-fluid">
+            <!-- row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>sửa tài khoản</h3>
+                    <form method="post" action="/admin/{{admins.id}}?_method=PATCH">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
+                            <input type="text" id="example-input1-group1" value="{{admins.name}}" name="name"
+                                class="form-control" placeholder="Username">
+                        </div>
+                        <div class="input-group mt-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="far fa-envelope"></i></span>
+                            </div>
+                            <input type="email" id="example-input2-group1" value="{{admins.email}}" name="email"
+                                class="form-control" placeholder="Email">
+
+                        </div>
+                        <div class="input-group mt-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                            </div>
+                            <input type="password" id="example-input1-group1" value="{{admins.password}}"
+                                name="password" class="form-control" placeholder="Mật khẩu">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Cập nhật tài khoản</button>
+                    </form>
+                </div>
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end content -->
+
+</div>
+<!-- END content-page -->
