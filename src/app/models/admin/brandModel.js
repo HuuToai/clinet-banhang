@@ -17,6 +17,9 @@ const Brand = sequelize.define(
             type: DataTypes.STRING,
             unique: true,
         },
+        image: {
+            type: DataTypes.STRING,
+        },
         description: {
             type: DataTypes.STRING,
         },
@@ -32,7 +35,7 @@ const Brand = sequelize.define(
         },
     },
     {
-        tableName: 'brand',
+        tableName: 'brands',
         createdAt: 'created_at',
         updatedAt: 'updated_at',
         deletedAt: 'deletedAt',
@@ -40,7 +43,6 @@ const Brand = sequelize.define(
         collate: 'utf8_general_ci',
         paranoid: true,
         timestamps: true,
-        freezeTableName: true,
     },
 );
 slugify.slugifyModel(Brand, {
@@ -50,13 +52,13 @@ slugify.slugifyModel(Brand, {
     column: 'slug',
 });
 
-Brand.sync({
-    alter: true,
-})
-    .then(() => {
-        // console.log("Cơ sở dữ liệu đã được cập nhật thành công.");
-    })
-    .catch((error) => {
-        console.error('Lỗi khi cập nhật cơ sở dữ liệu:', error);
-    });
+// Brand.sync({
+//   alter: true,
+// })
+//   .then(() => {
+//     // console.log("Cơ sở dữ liệu đã được cập nhật thành công.");
+//   })
+//   .catch((error) => {
+//     console.error("Lỗi khi cập nhật cơ sở dữ liệu:", error);
+//   });
 module.exports = Brand;

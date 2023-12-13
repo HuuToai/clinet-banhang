@@ -1,0 +1,168 @@
+<!-- ============================================================== -->
+<!-- Start Page Content here -->
+<!-- ============================================================== -->
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start container-fluid -->
+        <div class="container-fluid">
+
+            <!-- start  -->
+            <div class="row">
+                <div class="col-12">
+                    {{!-- {{#if count }} --}}
+                    <a class="btn btn-outline-danger" href="/admin/brand/trash">Thùng rác <i class="fa fa-trash-o"></i>
+                        ({{count}})</a>
+                    {{!-- {{/if}} --}}
+                    <div style="display: inline-block !important;" class="btn-create-admins">
+                        <a href="/admin/brand/create" class="btn btn-outline-primary create-admins">Tạo mới thương
+                            hiệu</a>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <form action="/admin/brand/search" method="post" class="form mt-4 mt-lg-0">
+                            <div class="form-group">
+                                <label class="control-label mt-3 mt-lg-0" for="example-input1-group2">Tìm kiếm thương
+                                    hiệu
+                                    theo tên</label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <button type="button" class="btn btn-primary"><i
+                                                class="fa fa-search"></i></button>
+                                    </span>
+                                    <input type="text" id="example-input1-group2" name="search" class="form-control"
+                                        placeholder="search tên thương hiệu...">
+                                </div>
+                            </div>
+
+
+                            <!-- form-group -->
+                        </form>
+                    </div>
+                    <div class="mt-4 d-flex align-item-center">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Chọn tất cả
+                            </label>
+                        </div>
+                        <select class="form-select form-control-sm checkbox-select-all-options"
+                            aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <button class="btn btn-primary btn-sm">Thực hiện</button>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row -->
+
+            <!-- row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mt-5">
+                        <h5 class="font-14">Danh sách thương hiệu</h5>
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên thương hiệu</th>
+                                        <th>Slug</th>
+                                        <th>LOGO</th>
+                                        <th>Mô tả</th>
+                                        <th>Người cập nhật</th>
+                                        <th>Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each brands }}
+
+                                    <tr>
+                                        <th scope="row">{{sum @index 1}}</th>
+                                        <td>{{this.name}}</td>
+                                        <td>{{this.slug}}</td>
+                                        <td><img src="{{ window.location.origin }}/uploads/brands/{{this.image}}"
+                                                width="80px" height="80px" alt="Ảnh Thương Hiệu" title="{{this.image}}">
+                                        </td>
+                                        <td>{{this.description}}</td>
+                                        <td>{{this.updatedBy}}</td>
+                                        <td>
+                                            <a href="/admin/brand/{{this.id}}/edit" className="btn btn-link">sửa</a>
+                                            <a href="" className="btn btn-link" data-id="{{this.id}}"
+                                                data-bs-toggle="modal" data-bs-target="#delete-brand-modal">xóa</a>
+                                        </td>
+                                    </tr>
+                                    {{else}}
+                                    <tr>
+                                        <td colSpan="5">Bạn chưa có thương hiệu nào
+                                            <a href="/admin/brand/create">Thêm mới thương hiệu
+                                            </a>
+                                        </td>
+                                        {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end content -->
+
+</div>
+<!-- END content-page -->
+
+</div>
+
+
+{{!-- confirm delete admin --}}
+<div id="delete-brand-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa thương hiệu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn xóa thương hiệu {{this.name}} không</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button id="btn-delete-brand" type="button" class="btn btn-danger">chuyển vào thùng rác</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- delete hidden form --}}
+<form name="delete-brand-form" method="post">
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var brandId;
+        var deleteform = document.forms['delete-brand-form'];
+        var btnDeletebrand = document.getElementById('btn-delete-brand');
+
+
+        //when dialog confirm is clicked
+        $('#delete-brand-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var id = button.data('id'); // Extract info from data-* attributes
+            brandId = button.data('id');
+        });
+        //when delete admin btn click
+        btnDeletebrand.onclick = function (event) {
+            deleteform.action = '/admin/brand/' + brandId + '/?_method=DELETE';//set thêm action cho form
+            deleteform.submit();
+        }
+    });
+
+</script>

@@ -1,0 +1,110 @@
+<!-- ============================================================== -->
+<!-- Start Page Content here -->
+<!-- ============================================================== -->
+<div class="content-page">
+    <div class="content">
+        <!-- Start container-fluid -->
+        <div class="container-fluid">
+            <!-- row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <form method="post" action="/admin/product/{{products.id}}?_method=PATCH" class="form-horizontal"
+                        enctype="multipart/form-data">
+                        <div class="form-group row">
+                            <label for="eexampleSelect3" class="col-md-2 col-form-label">Tên Sản Phẩm</label>
+                            <div class="col-md-10">
+                                <input id="slug" value="{{products.name}}" type="text" class="form-control"
+                                    data-validation="length" data-validation-length="min10"
+                                    data-validation-error-msg="Làm ơn nhập " class="form-control"
+                                    onkeyup="ChangeToSlug();" placeholder="Nhập tên Sản Phẩm" name="name" />
+                            </div>
+                            <input hidden type="text" id="convert_slug" value="{{products.slug}}" name="slug"
+                                class="form-control" placeholder="Slug">
+                        </div>
+                        <div class="form-group row">
+                            <label for="eexampleSelect5" class="col-md-2 col-form-label">
+                                Giá nhập Sản Phẩm</label>
+                            <div class="col-md-10">
+                                <input id="eexampleSelect5" value="{{products.price_in}}" type="number"
+                                    class="form-control" placeholder="Nhập giá nhập Sản Phẩm" name="price_in" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="eexampleSelect5" class="col-md-2 col-form-label"> Giá
+                                bán Sản Phẩm</label>
+                            <div class="col-md-10">
+                                <input id="eexampleSelect5" value="{{products.price}}" type="number"
+                                    class="form-control" placeholder="Nhập giá bán của Sản Phẩm" name="price" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="eexampleSelect6" class="col-md-2 col-form-label">Số lượng Sản Phẩm</label>
+                            <div class="col-md-10">
+                                <input id="eexampleSelect6" value="{{products.quantity}}" type="number"
+                                    class="form-control" placeholder="Nhập số lượng Sản Phẩm" name="quantity" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="eexampleSelect12">Ảnh sản phẩm</label>
+                            <input name="image" type="file" class="filestyle" id="eexampleSelect12 ">
+                            <img src="{{ window.location.origin }}/uploads/products/{{products.image}}" width="80px"
+                                height="80px" alt="Ảnh sản phẩm" title="{{products.image}}">
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-textarea">
+                                Mô tả Sản Phẩm
+                            </label>
+                            <div>
+                                <textarea name="description" class="form-control" rows="5"
+                                    id="example-textarea">{{products.description}} </textarea>
+                            </div>
+                        </div>
+                        <fieldset class="form-group">
+                            <label for="exampleSelect1">Thương Hiệu</label>
+                            <select class="form-control" name="brand_id" id="eexampleSelect1">
+                                {{#each brands }}
+                                <option value="{{this.id}}" {{#if (eq this.id ../products.brand_id) }}selected{{/if}}>
+                                    {{this.name}}
+                                </option>
+                                {{/each}}
+                            </select>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label for="exampleSelect1">Danh Mục</label>
+                            <select class="form-control" name="category_id" id="eexampleSelect1">
+                                {{#each categories }}
+                                <option value="{{this.id}}" {{#if (eq this.id ../products.category_id)
+                                    }}selected{{/if}}>
+                                    {{this.name}}
+                                </option>
+                                {{/each}}
+                            </select>
+                        </fieldset>
+
+                        <fieldset class="form-group">
+                            <label for="exampleSelect1">Tình trạng</label>
+                            <select class="form-control" name="status" id="eexampleSelect11">
+                                {{#if (eq products.status 1)}}
+                                <option selected value="1">Kích hoạt</option>
+                                </option>
+                                <option value="0">Chưa Kích Hoạt</option>
+                                {{else}}
+                                <option value="1">Kích hoạt</option>
+                                </option>
+                                <option selected value="0">Chưa Kích Hoạt</option>
+                                {{/if}}
+                            </select>
+                        </fieldset>
+                        <button class="btn btn-primary" type="submit">Cập nhật Sản Phẩm</button>
+                </div>
+                </form>
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end content -->
+
+</div>
+<!-- END content-page -->

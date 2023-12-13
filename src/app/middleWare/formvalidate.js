@@ -1,34 +1,12 @@
-// validate.js
-const { body, validationResult } = require('express-validator');
+const { check, body, validationResult } = require('express-validator');
 
-function validateCreateBrand() {
-    return [
-        body('name').notEmpty().withMessage('Bạn chưa nhập tên thương hiệu'),
-        body('description')
-            .notEmpty()
-            .withMessage('Bạn chưa nhập mô tả thương hiệu'),
-    ];
-}
-
-function validateUpdateBrand() {
-    return [
-        body('name').notEmpty().withMessage('Bạn chưa nhập tên thương hiệu'),
-        body('description')
-            .notEmpty()
-            .withMessage('Bạn chưa nhập mô tả thương hiệu'),
-    ];
-}
-
-function handleValidationErrors(req, res, next) {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
+function validateCreateBrand(req, res, next) {
+    // Sử dụng check() để kiểm tra trường name
+    body('name', 'name does not Empty').notEmpty();
+    // Nếu không có lỗi, tiếp tục xử lý
     next();
 }
 
 module.exports = {
     validateCreateBrand,
-    validateUpdateBrand,
-    handleValidationErrors,
 };

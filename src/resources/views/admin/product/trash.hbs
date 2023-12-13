@@ -1,0 +1,153 @@
+<!-- ============================================================== -->
+<!-- Start Page Content here -->
+<!-- ============================================================== -->
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start container-fluid -->
+        <div class="container-fluid">
+
+            <!-- start  -->
+            <div class="row">
+                <div class="col-12">
+                    <div style="display: inline-block !important;" class="btn-create-admins">
+                        <a href="/admin/product/" class="btn btn-outline-primary create-admins">Quay lại danh sách
+                            Sản Phẩm</a>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row -->
+
+            <!-- row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mt-5">
+                        <h5 class="font-14">Danh sách Sản Phẩm bị xóa</h5>
+
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên Sản phẩm</th>
+                                        <th>Số Lượng còn</th>
+                                        <th>Đã bán</th>
+                                        <th>Ảnh Sản Phẩm</th>
+                                        <th>Giá nhập</th>
+                                        <th>Giá bán</th>
+                                        <th>Người cập nhật</th>
+                                        <th>Trạng Thái</th>
+                                        <th>Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each products}}
+
+                                    <tr>
+                                        <th scope="row">{{sum @index 1}}</th>
+                                        <td>{{this.name}}</td>
+                                        <td>{{this.quantity}}</td>
+                                        <td>{{this.sold}}</td>
+                                        <td><img src="{{ window.location.origin }}/uploads/products/{{this.image}}"
+                                                width="80px" height="80px" alt="Ảnh Sản phẩm" title="{{this.image}}">
+                                        </td>
+                                        <td>{{this.price_in}}</td>
+                                        <td>{{this.price}}</td>
+                                        <td>{{this.updatedBy}}</td>
+                                        <td>
+                                            <input disabled name="status" type="checkbox" value="{{this.status}}" {{#if
+                                                (eq this.status 1)}}checked {{else if (eq this.status 0)}} unchecked
+                                                {{/if}} data-plugin="switchery" data-color="#ff7aa3" data-size="small">
+                                            <!-- Giá trị mặc định khi checkbox không được chọn -->
+                                        </td>
+                                        <td>
+                                            <a href="" class="btn btn-link btn-restore"
+                                                data-id="{{this.id}}">Restore</a>
+                                            <a href="" className="btn btn-link" data-id="{{this.id}}"
+                                                data-bs-toggle="modal" data-bs-target="#delete-product-modal">xóa</a>
+                                        </td>
+                                    </tr>
+                                    {{else}}
+                                    <tr>
+                                        <td colspan="5">Thùng rác rỗng <a href="/admin/product">quay lại danh sách
+                                                Sản phẩm</a></td>
+                                        {{/each}}
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end content -->
+
+</div>
+<!-- END content-page -->
+
+
+{{!-- confirm delete product --}}
+<div id="delete-product-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa vĩnh viễn</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>hành động này không thể khôi phuc. bạn vẫn muốn xóa tài khoản này?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button id="btn-delete-product" type="button" class="btn btn-danger">Xóa vĩnh viễn</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- //delete --}}
+<form name="delete-product-form" method="post">
+</form>
+{{!-- restore --}}
+<form name="restore-product-form" method="post">
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var productId;
+        var deleteform = document.forms['delete-product-form'];
+        var restoreform = document.forms['restore-product-form'];
+        var btnDeleteProduct = document.getElementById('btn-delete-product');
+        var restoreBtns = $('.btn-restore')
+
+
+        //when dialog confirm is clicked
+        $('#delete-product-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var id = button.data('id'); // Extract info from data-* attributes
+            productId = button.data('id');
+        });
+        //when delete product btn click
+        btnDeleteProduct.onclick = function (event) {
+            deleteform.action = '/admin/product/' + productId + '/force?_method=DELETE';//set thêm action cho form
+            deleteform.submit();
+        }
+
+        restoreBtns.click(function (event) {
+            event.preventDefault();
+            var productId = $(this).data('id');
+
+            restoreform.action = '/admin/product/' + productId + '/restore?_method=PATCH';//set thêm action cho form
+            restoreform.submit();
+        });
+
+
+    });
+
+</script>

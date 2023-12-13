@@ -1,4 +1,4 @@
-.card-admin-item {
+.card-course-item {
     padding-top: 16px !important;
 }
 
@@ -9,13 +9,17 @@
     margin-right: 4px;
 }
 
-.btn-create-admins {
+.btn-create-courses {
     position: relative;
     width: 100%;
     height: 40px;
 }
 
-.create-admins {
+.create-courses {
     position: absolute;
     right: 0;
+}
+
+.checkbox-select-all-options {
+    width: 120px !important;
 }

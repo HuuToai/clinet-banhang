@@ -32,13 +32,13 @@ const Admin = sequelize.define(
     },
 );
 
-Admin.sync({
-    alter: true,
-})
-    .then(() => {
-        // console.log("Cơ sở dữ liệu đã được cập nhật thành công.");
-    })
-    .catch((error) => {
-        console.error('Lỗi khi cập nhật cơ sở dữ liệu:', error);
-    });
+// Admin.sync({
+//     alter: true,
+// })
+//     .then(() => {
+//         // console.log("Cơ sở dữ liệu đã được cập nhật thành công.");
+//     })
+//     .catch((error) => {
+//         console.error('Lỗi khi cập nhật cơ sở dữ liệu:', error);
+//     });
 module.exports = Admin;

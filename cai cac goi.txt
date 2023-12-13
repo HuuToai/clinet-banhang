@@ -78,3 +78,5 @@ tạo slug auto
 
  upload file
  yarn add multer --dev
+
+ sequelize-slugify@latest
