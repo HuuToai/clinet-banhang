@@ -8,7 +8,7 @@ const uploadproduct = require('../../middleWare/uploadProduct');
 const multer = require('multer');
 class productController {
     // [GET] /news
-    index(req, res, next) {
+    async index(req, res, next) {
         Promise.all([
             Product.findAll({ raw: true }),
             Product.count({
@@ -25,6 +25,9 @@ class productController {
                 res.render('admin/product/home', {
                     products,
                     count,
+                    headadmin: true,
+                    jsadmin: true,
+
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,
@@ -62,6 +65,8 @@ class productController {
                 res.render('admin/product/create', {
                     brands,
                     categories,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,
@@ -140,6 +145,8 @@ class productController {
                 res.render('admin/product/edit', {
                     products,
                     brands,
+                    headadmin: true,
+                    jsadmin: true,
                     categories,
                     showSlider: true,
                     showNavbar: true,
@@ -269,6 +276,8 @@ class productController {
             .then((products) => {
                 res.render('admin/product/trash', {
                     products,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,
@@ -318,6 +327,8 @@ class productController {
                 res.render('admin/product/home', {
                     products,
                     count,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,

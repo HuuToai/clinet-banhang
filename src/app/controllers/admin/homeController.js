@@ -7,6 +7,8 @@ class homeController {
     // [GET] /news
     index(req, res) {
         res.render('admin/home', {
+            headadmin: true,
+            jsadmin: true,
             showSlider: true,
             showNavbar: true,
             showRightBar: true,
@@ -33,6 +35,8 @@ class homeController {
                 res.render('admin/account/view-account', {
                     accounts,
                     count,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,
@@ -44,6 +48,8 @@ class homeController {
     }
     register(req, res) {
         res.render('admin/account/register', {
+            headadmin: true,
+            jsadmin: true,
             showSlider: false,
             showNavbar: false,
             showRightBar: false,
@@ -55,6 +61,8 @@ class homeController {
             .then((admins) => {
                 res.render('admin/account/edit', {
                     admins,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,
@@ -100,6 +108,8 @@ class homeController {
                     },
                 );
                 res.redirect('/admin/view', {
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,
@@ -142,6 +152,8 @@ class homeController {
                     password: hashedPassword,
                 });
                 res.redirect('/admin', {
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,
@@ -160,6 +172,8 @@ class homeController {
 
     login(req, res) {
         res.render('admin/account/login', {
+            headadmin: true,
+            jsadmin: true,
             showSlider: false,
             showNavbar: false,
             showRightBar: false,
@@ -265,6 +279,8 @@ class homeController {
             .then((accounts) => {
                 res.render('admin/account/trash-account', {
                     accounts,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,
@@ -299,6 +315,8 @@ class homeController {
                 res.render('admin/account/view-account', {
                     accounts,
                     count,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,

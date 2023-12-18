@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
+{{#if headadmin}}
 
 <head>
     <meta charset="utf-8">
@@ -29,16 +30,42 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
 </head>
+{{/if}}
+{{#if headclient}}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Untree.co">
+    <link rel="shortcut icon" href="favicon.png">
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="bootstrap, bootstrap4" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="/client/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="/client/css/tiny-slider.css" rel="stylesheet">
+    <link href="/client/css/style.css" rel="stylesheet">
+
+    {{!-- Thông báo toastr --}}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+</head>
+{{/if}}
+
 
 <body>
     <div class="app">
         <div id="wrapper">
-            {{#if message.success}}
+            {{!-- {{#if message.success}}
             <div class="alert alert-success">{{message.success}}</div>
             {{/if}}
             {{#if message.error}}
             <div class="alert alert-danger">{{message.error}}</div>
-            {{/if}}
+            {{/if}} --}}
 
             {{{ toastr }}}
 
@@ -57,7 +84,14 @@
             <!-- ============================================================== -->
             <!-- Start Page Content here -->
             <!-- ============================================================== -->
+            {{#if showNavbarClient}}
+
+            {{> client-navbar}}
+            {{/if}}
             {{{body}}}
+            {{#if showFooterClient}}
+            {{> client-footer}}
+            {{/if}}
             <!-- END content-page -->
             {{#if showRightBar}}
             {{> right-bar}}
@@ -70,6 +104,7 @@
 
 
     </div>
+    {{#if jsadmin}}
 
     <!-- Vendor js -->
     <script src="/assets/js/vendor.min.js"></script>
@@ -150,6 +185,18 @@
 
 
     </script>
+    {{/if}}
+
+    {{#if jsclient}}
+
+
+    <!-- End Footer Section -->
+    <script src="/client/js/bootstrap.bundle.min.js"></script>
+    <script src="/client/js/tiny-slider.js"></script>
+    <script src="/client/js/custom.js"></script>
+
+
+    {{/if}}
 
 </body>
 

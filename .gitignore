@@ -1,8 +1,4 @@
 .vscode
 node_modules/
-dongho/
-simple-admin-dashboard/
 
-.config/
-.husky/
-.idea/
+simple-admin-dashboard/

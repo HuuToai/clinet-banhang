@@ -1,0 +1,281 @@
+<!-- Start Header/Navigation -->
+
+
+<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+
+    <div class="container">
+        <a class="navbar-brand" href="/">PHT<span>.</span></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+            aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+            <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Trang Chủ</a>
+                </li>
+                <li><a class="nav-link" href="/shop">Cửa Hàng</a></li>
+                <li><a class="nav-link" href="/about">Về chúng tôi</a></li>
+                <li><a class="nav-link" href="/services">Dịch vụ</a></li>
+                <li><a class="nav-link" href="/blog">Bài viết</a></li>
+                <li><a class="nav-link" href="/contact">Liên hệ với chúng tôi</a></li>
+            </ul>
+
+            <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                        aria-expanded="false">{{username}}<img src="/client/images/user.svg"></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/login">Đăng nhập <i class="fa fa-sign-in"></i></a></li>
+                        <div class="dropdown-divider"></div>
+
+                        <li><a class="dropdown-item" href="/register">Đăng ký</a></li>
+                        <div class="dropdown-divider"></div>
+
+                        <li><a class="dropdown-item" href="/logout">Đăng xuất <i class="fa fa-sign-out"></i></a></li>
+                    </ul>
+                </li>
+                {{!-- <li><a class="nav-link" href="/login">{{username}}<img src="/client/images/user.svg"></a></li>
+                --}}
+                <li><a class="nav-link" href="/cart"><img src="/client/images/cart.svg"></a></li>
+            </ul>
+        </div>
+    </div>
+
+</nav>
+<!-- End Header/Navigation -->
+
+
+<!-- Start Hero Section -->
+<div class="hero">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Shop PHT <span clsas="d-block">thiết kế nội thất</span></h1>
+                    <p class="mb-4">Hãy là những người có lựa chọn sáng suốt và thông minh nhất, thông thái nhất và lựa
+                        chọn tốt nhất trong tầm giá và sự uy tín hàng đầu</p>
+                    <p><a href="" class="btn btn-secondary me-2">Đến cửa hàng</a><a href="/shop"
+                            class="btn btn-white-outline">Xem thêm</a></p>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="hero-img-wrap">
+                    <img src="/client/images/couch.png" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Hero Section -->
+
+<!-- Start Product Section -->
+<div class="product-section">
+    <div class="container">
+        <div class="row">
+
+            <!-- Start Column 1 -->
+            <div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
+                <h2 class="mb-4 section-title">Được sản xuất từ chất liệu chọn lọc</h2>
+                <p class="mb-4">Những sản phẩm của chúng tôi được tạo ra từ những chất liệu đặc biệt và lựa chọn tỉ mỉ
+                    nhất của từng chất liệu từ những đơn vị nhỏ nhất của từng bộ phận. </p>
+                <p><a href="shop.html" class="btn">Khám phá thêm...</a></p>
+            </div>
+            <!-- End Column 1 -->
+            {{#each newlyAddedProducts }}
+
+            <!-- Start Column 2 -->
+            <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                <a class="product-item" href="/{{this.id}}/product_detail">
+                    <img src="{{ window.location.origin }}/uploads/products/{{this.image}}"
+                        class="img-fluid product-thumbnail">
+                    <h3 class="product-title">{{this.name}}</h3>
+                    <strong class="product-price">{{this.price}} VNĐ</strong>
+
+                    <span class="icon-cross">
+                        <img src="/client/images/cross.svg" class="img-fluid">
+                    </span>
+                </a>
+            </div>
+            <!-- End Column 2 -->
+            {{/each}}
+
+        </div>
+    </div>
+</div>
+<!-- End Product Section -->
+
+
+<!-- Start Testimonial Slider -->
+<div class="testimonial-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 mx-auto text-center">
+                <h2 class="section-title">Đánh giá</h2>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="testimonial-slider-wrap text-center">
+
+                    <div id="testimonial-nav">
+                        <span class="prev" data-controls="prev"><span class="fa fa-chevron-left"></span></span>
+                        <span class="next" data-controls="next"><span class="fa fa-chevron-right"></span></span>
+                    </div>
+
+                    <div class="testimonial-slider">
+
+                        <div class="item">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8 mx-auto">
+
+                                    <div class="testimonial-block text-center">
+                                        <blockquote class="mb-5">
+                                            <p>&ldquo;Đầu tiên, tôi phải khen ngợi về chất lượng của sản phẩm. Sofa được
+                                                làm từ vật liệu chất lượng cao, vô cùng êm ái và bền bỉ. Chúng tôi
+                                                thường xuyên sử dụng sofa này trong gia đình, từ những buổi xem phim đến
+                                                những cuộc họp nhỏ cùng bạn bè, và nó vẫn giữ nguyên vẻ đẹp và thoải mái
+                                                từ khi mới mua..&rdquo;</p>
+                                        </blockquote>
+
+                                        <div class="author-info">
+                                            <div class="author-pic">
+                                                <img src="/client/images/person-1.png" alt="Hữu Toại" class="img-fluid">
+                                            </div>
+                                            <h3 class="font-weight-bold">Hữu Toại</h3>
+                                            <span class="position d-block mb-3">Khách hàng thân thiết.</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END item -->
+
+                        <div class="item">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8 mx-auto">
+
+                                    <div class="testimonial-block text-center">
+                                        <blockquote class="mb-5">
+                                            <p>&ldquo;Dịch vụ khách hàng cũng đáng kể. Nhân viên hỗ trợ tận tình và
+                                                nhiệt tình giải đáp mọi thắc mắc của tôi trước và sau khi mua sản phẩm.
+                                                Điều này tạo ra một trải nghiệm mua sắm trọn vẹn và làm tăng giá trị của
+                                                sản phẩm..&rdquo;</p>
+                                        </blockquote>
+
+                                        <div class="author-info">
+                                            <div class="author-pic">
+                                                <img src="/client/images/person-1.png" alt="Maria Jones"
+                                                    class="img-fluid">
+                                            </div>
+                                            <h3 class="font-weight-bold">Anh Thơ</h3>
+                                            <span class="position d-block mb-3">Khách hàng hay ghé thăm</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END item -->
+
+                        <div class="item">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8 mx-auto">
+
+                                    <div class="testimonial-block text-center">
+                                        <blockquote class="mb-5">
+                                            <p>&ldquo;Thiết kế của sản phẩm cũng là một điểm mạnh lớn. Nó không chỉ mang
+                                                lại cảm giác sang trọng và hiện đại cho phòng khách của tôi mà còn tích
+                                                hợp tốt với phong cách trang trí nội thất hiện tại của gia đình. Mỗi chi
+                                                tiết được chăm chút kỹ lưỡng, từ đường may tới cách bố trí màu sắc, tạo
+                                                nên một không gian ấm cúng và lôi cuốn.&rdquo;</p>
+                                        </blockquote>
+
+                                        <div class="author-info">
+                                            <div class="author-pic">
+                                                <img src="/client/images/person-1.png" alt="Maria Jones"
+                                                    class="img-fluid">
+                                            </div>
+                                            <h3 class="font-weight-bold">Nguyễn Thanh</h3>
+                                            <span class="position d-block mb-3">Đại lý cấp 1 cung cấp</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END item -->
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Testimonial Slider -->
+
+
+<!-- Start Blog Section -->
+<div class="blog-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <h2 class="section-title">Bài viết gần đây</h2>
+            </div>
+            <div class="col-md-6 text-start text-md-end">
+                <a href="#" class="more">Hiển thị tất cả bài viết</a>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                <div class="post-entry">
+                    <a href="#" class="post-thumbnail"><img src="/client/images/post-1.jpg" alt="Image"
+                            class="img-fluid"></a>
+                    <div class="post-content-entry">
+                        <h3><a href="#">First Time Home Owner Ideas</a></h3>
+                        <div class="meta">
+                            <span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 19,
+                                    2021</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                <div class="post-entry">
+                    <a href="#" class="post-thumbnail"><img src="/client/images/post-2.jpg" alt="Image"
+                            class="img-fluid"></a>
+                    <div class="post-content-entry">
+                        <h3><a href="#">How To Keep Your Furniture Clean</a></h3>
+                        <div class="meta">
+                            <span>by <a href="#">Robert Fox</a></span> <span>on <a href="#">Dec 15, 2021</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                <div class="post-entry">
+                    <a href="#" class="post-thumbnail"><img src="/client/images/post-3.jpg" alt="Image"
+                            class="img-fluid"></a>
+                    <div class="post-content-entry">
+                        <h3><a href="#">Small Space Furniture Apartment Ideas</a></h3>
+                        <div class="meta">
+                            <span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 12,
+                                    2021</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End Blog Section -->

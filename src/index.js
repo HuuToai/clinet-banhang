@@ -8,6 +8,8 @@ const flash = require('connect-flash');
 const toastr = require('express-toastr');
 const db = require('./config/');
 const { checkAuthentication } = require('./app/middleWare/middleware');
+const { checklogin } = require('./app/middleWare/checklogin');
+
 const sequelize = require('./config/sequelize');
 const path = require('path');
 const route = require('./routes');
@@ -62,6 +64,8 @@ app.engine(
                 //để so sánh a =  b không
                 return a === b;
             },
+            gt: (a, b) => a > b, // so sánh a > b
+            lt: (a, b) => a < b, // so sánh a < b
         },
     }),
 );

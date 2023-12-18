@@ -25,6 +25,8 @@ class brandController {
                 res.render('admin/brand/home', {
                     brands,
                     count,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,
@@ -37,6 +39,8 @@ class brandController {
 
     create(req, res) {
         res.render('admin/brand/create', {
+            headadmin: true,
+            jsadmin: true,
             showSlider: true,
             showNavbar: true,
             showRightBar: true,
@@ -87,6 +91,8 @@ class brandController {
             .then((brands) => {
                 res.render('admin/brand/edit', {
                     brands,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,
@@ -204,6 +210,8 @@ class brandController {
             .then((brands) => {
                 res.render('admin/brand/trash', {
                     brands,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,
@@ -254,6 +262,8 @@ class brandController {
                 res.render('admin/brand/home', {
                     brands,
                     count,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,

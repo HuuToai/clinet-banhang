@@ -23,6 +23,8 @@ class categoryController {
                 res.render('admin/category/home', {
                     categories,
                     count,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,
@@ -35,6 +37,8 @@ class categoryController {
 
     create(req, res) {
         res.render('admin/category/create', {
+            headadmin: true,
+            jsadmin: true,
             showSlider: true,
             showNavbar: true,
             showRightBar: true,
@@ -85,6 +89,8 @@ class categoryController {
             .then((categories) => {
                 res.render('admin/category/edit', {
                     categories,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,
@@ -203,6 +209,8 @@ class categoryController {
             .then((categories) => {
                 res.render('admin/category/trash', {
                     categories,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,
@@ -253,6 +261,8 @@ class categoryController {
                 res.render('admin/category/home', {
                     categories,
                     count,
+                    headadmin: true,
+                    jsadmin: true,
                     showSlider: true,
                     showNavbar: true,
                     showRightBar: true,

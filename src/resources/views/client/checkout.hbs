@@ -1,0 +1,110 @@
+<!-- Start Hero Section -->
+<div class="hero">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Đặt Hàng</h1>
+                </div>
+            </div>
+            <div class="col-lg-7">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Hero Section -->
+
+<div class="untree_co-section">
+    <div class="container">
+        <form action="/submit-checkout" method="post">
+            <div class="row">
+                <div class="col-md-6 mb-5 mb-md-0">
+                    <h2 class="h3 mb-3 text-black">Chi tiết thanh toán</h2>
+
+                    <div class="p-3 p-lg-5 border bg-white">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="c_fname" class="text-black">Họ Tên <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="c_fname" name="name">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="c_address" class="text-black">Địa chỉ <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="c_address" name="address"
+                                    placeholder="nhập địa chỉ">
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-5">
+                            <div class="col-md-6">
+                                <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="c_phone" name="phone"
+                                    placeholder="Phone Number">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="c_order_notes" class="text-black">Ghi chú đặt hàng</label>
+                            <textarea name="note" id="c_order_notes" cols="30" rows="5" class="form-control"
+                                placeholder="hãy viết vào ghi chú của bạn..."></textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <h2 class="h3 mb-3 text-black">Đơn hàng của bạn</h2>
+                            <div class="p-3 p-lg-5 border bg-white">
+                                <table class="table site-block-order-table mb-5">
+                                    <thead>
+                                        <th>Sản phẩm</th>
+                                        <th>Tổng</th>
+                                    </thead>
+                                    <tbody>
+                                        {{#each cartItems}}
+                                        <tr>
+                                            <td>{{this.productName}} <strong class="mx-2">x</strong> {{this.quantity}}
+                                            </td>
+                                            <td>{{this.price}}</td>
+                                        </tr>
+                                        {{/each}}
+                                        <tr>
+                                            <td class="text-black font-weight-bold"><strong>Tổng sản phẩm </strong></td>
+                                            <td class="text-black">{{totalQuantity}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-black font-weight-bold"><strong>Tổng thanh toán</strong>
+                                            </td>
+                                            <td class="text-black font-weight-bold"><strong>{{total}}</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="border p-3 mb-5">
+                                    <select id="hinhthucthanhtoan" name="shipping_method" style="width: 100%;">
+                                        <option value="cod">COD</option>
+                                        <option value="vnpay">VNPAY</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    {{!-- <button class="btn btn-black btn-lg py-3 btn-block"
+                                        onclick="window.location='/submit-checkout'">Đặt
+                                        hàng</button> --}}
+                                    <button type="submit">Submit</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
