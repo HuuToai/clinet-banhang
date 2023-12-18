@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký | Khách Hàng</title>
+    <link rel="stylesheet" href="/client/css/login/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="screen">
+            <div class="screen__content">
+                <form action="/process-register" method="POST" class="login" onsubmit="return validateForm()">
+                    <div class="login__field">
+                        <i class="login__icon fas fa-user"></i>
+                        <input type="text" class="login__input" id="username" required="" name="username"
+                            placeholder="username">
+                        <div id="usernameError" class="error-message"></div>
+
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon fas fa-user"></i>
+                        <input type="text" class="login__input" id="email" name="email" placeholder="Email">
+                        <div id="emailError" class="error-message"></div>
+
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon fas fa-lock"></i>
+                        <input type="password" class="login__input" id="password" name="password"
+                            placeholder="Password">
+                        <div id="passwordError" class="error-message"></div>
+
+                    </div>
+
+                    <button class="button login__submit">
+                        <span class="button__text">Đăng Ký Ngay</span>
+                        <i class="button__icon fas fa-chevron-right"></i>
+                    </button>
+                </form>
+                <div style="padding-top: 30px;" class="social-login">
+                    <a href="/login">
+                        <h3>Đăng Nhập</h3>
+                    </a>
+                </div>
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    function validateForm() {
+        // Lấy giá trị từ các trường input
+        var username = document.getElementById('username').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        if (!username) {
+            document.getElementById('usenameError').innerText = 'Vui lòng nhập user name';
+            return false;
+        } else {
+            document.getElementById('usenameError').innerText = '';
+        }
+        // Kiểm tra xem email và password có được nhập hay không
+        if (!email) {
+            document.getElementById('emailError').innerText = 'Vui lòng nhập email';
+            return false;
+        } else {
+            document.getElementById('emailError').innerText = '';
+        }
+
+        // Kiểm tra định dạng email
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            document.getElementById('emailError').innerText = 'Định dạng email không hợp lệ';
+            return false;
+        } else {
+            document.getElementById('emailError').innerText = '';
+        }
+
+        if (!password) {
+            document.getElementById('passwordError').innerText = 'Vui lòng nhập mật khẩu';
+            return false;
+        } else {
+            document.getElementById('passwordError').innerText = '';
+        }
+
+
+
+        // Nếu mọi thứ hợp lệ, cho phép gửi biểu mẫu
+        return true;
+    }
+</script>
+
+</html>
