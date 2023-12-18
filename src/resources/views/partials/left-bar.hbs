@@ -1,0 +1,94 @@
+<div class="left-side-menu">
+    <div class="user-box">
+        <div class="float-left">
+            <img src="/assets/images/users/avatar-1.jpg" alt="" class="avatar-md rounded-circle">
+        </div>
+        <div class="user-info">
+            <a href="#">{{ name }}</a>
+            <p class="text-muted m-0">Administrator</p>
+        </div>
+    </div>
+
+    <!--- Sidemenu -->
+    <div id="sidebar-menu">
+
+        <ul class="metismenu" id="side-menu">
+
+            <li class="menu-title">Chức năng quản lý</li>
+
+            <li>
+                <a href="/admin">
+                    <i class="ti-home"></i>
+                    <span> Trang Chủ </span>
+                </a>
+            </li>
+
+            <li>
+                <a href="javascript: void(0);">
+                    <i class="ti-user"></i>
+                    <span> Tài khoản </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li><a href="/admin/view">Danh sách tài khoản</a></li>
+                    <li><a href="/admin/register">Tạo tài khoản</a></li>
+                    <li><a href="/admin/trash">Tài khoản đã xóa</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="javascript: void(0);">
+                    <i class="ti-user"></i>
+                    <span> Thương hiệu </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li><a href="/admin/brand/create">Thêm thương hiệu</a></li>
+                    <li><a href="/admin/brand">Danh sách thương hiệu</a></li>
+                    {{!-- <li><a href="/admin/trash">Tài khoản đã xóa</a></li> --}}
+                </ul>
+            </li>
+            <li>
+                <a href="javascript: void(0);">
+                    <i class="ti-user"></i>
+                    <span> Danh Mục </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li><a href="/admin/category/create">Thêm Danh Mục</a></li>
+                    <li><a href="/admin/category">Danh sách Danh Mục</a></li>
+                    {{!-- <li><a href="/admin/trash">Tài khoản đã xóa</a></li> --}}
+                </ul>
+            </li>
+            <li>
+                <a href="javascript: void(0);">
+                    <i class="ti-user"></i>
+                    <span> Sản phẩm </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li><a href="/admin/product/create">Thêm Sản phẩm</a></li>
+                    <li><a href="/admin/product">Danh sách Sản phẩm</a></li>
+                    {{!-- <li><a href="/admin/trash">Tài khoản đã xóa</a></li> --}}
+                </ul>
+            </li>
+            <li>
+                <a href="javascript: void(0);">
+                    <i class="ti-user"></i>
+                    <span> Đơn hàng </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li><a href="/admin/order">Danh sách Đơn hàng</a></li>
+                    {{!-- <li><a href="/admin/trash">Tài khoản đã xóa</a></li> --}}
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+    <!-- End Sidebar -->
+
+    <div class="clearfix"></div>
+
+
+</div>

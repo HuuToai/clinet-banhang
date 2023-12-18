@@ -1,0 +1,105 @@
+<!-- Start Header/Navigation -->
+
+
+<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+
+    <div class="container">
+        <a class="navbar-brand" href="/">PHT<span>.</span></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+            aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+            <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/">Trang Chủ</a>
+                </li>
+                <li class="active"><a class="nav-link" href="/shop">Cửa Hàng</a></li>
+                <li><a class="nav-link" href="/about">Về chúng tôi</a></li>
+                <li><a class="nav-link" href="/services">Dịch vụ</a></li>
+                <li><a class="nav-link" href="/blog">Bài viết</a></li>
+                <li><a class="nav-link" href="/contact">Liên hệ với chúng tôi</a></li>
+            </ul>
+
+            <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                        aria-expanded="false">{{username}}<img src="/client/images/user.svg"></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/login">Đăng nhập <i class="fa fa-sign-in"></i></a></li>
+                        <div class="dropdown-divider"></div>
+
+                        <li><a class="dropdown-item" href="/register">Đăng ký</a></li>
+                        <div class="dropdown-divider"></div>
+
+                        <li><a class="dropdown-item" href="/logout">Đăng xuất <i class="fa fa-sign-out"></i></a></li>
+                    </ul>
+                </li>
+                {{!-- <li><a class="nav-link" href="/login">{{username}}<img src="/client/images/user.svg"></a></li>
+                --}}
+                <li><a class="nav-link" href="/cart"><img src="/client/images/cart.svg"></a></li>
+            </ul>
+        </div>
+    </div>
+
+</nav>
+<!-- End Header/Navigation -->
+
+<!-- Start Hero Section -->
+<div class="hero">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Tất cả sản phẩm</h1>
+                </div>
+            </div>
+            <div class="col-lg-7">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Hero Section -->
+<form name="add-to-cart-form" method="get">
+</form>
+
+
+
+<div class="untree_co-section product-section before-footer-section">
+    <div class="container">
+        <div class="row">
+            {{#each products}}
+            <!-- Start Column 1 -->
+            <div class="col-12 col-md-4 col-lg-3 mb-5">
+                <a class="product-item" href="/{{this.id}}/product_detail">
+                    <img src="{{ window.location.origin }}/uploads/products/{{this.image}}"
+                        class="img-fluid product-thumbnail">
+                    <h3 class="product-title">{{this.name}}</h3>
+                    <strong class="product-price">{{this.price}} VNĐ</strong>
+                    <div class="product " data-product-id="{{this.id}}">
+                        <span class="icon-cross" onclick="addToCart('{{this.id}}')">
+                            <img src="/client/images/cross.svg" class="img-fluid">
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <!-- End Column 1 -->
+            {{/each}}
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var addtocartform = document.forms['add-to-cart-form'];
+
+    function addToCart(productId) {
+
+        addtocartform.action = '/' + productId + '/product_detail/';//set thêm action cho form
+        addtocartform.submit();
+    }
+</script>

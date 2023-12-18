@@ -1,0 +1,136 @@
+<!-- ============================================================== -->
+<!-- Start Page Content here -->
+<!-- ============================================================== -->
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start container-fluid -->
+        <div class="container-fluid">
+
+            <!-- start  -->
+            <div class="row">
+                <div class="col-12">
+                    <div style="display: inline-block !important;" class="btn-create-admins">
+                        <a href="/admin/view" class="btn btn-outline-primary create-admins">Quay lại danh sách tài
+                            khoản</a>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row -->
+
+            <!-- row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mt-5">
+                        <h5 class="font-14">Danh sách tài khoản</h5>
+
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên tài khoản</th>
+                                        <th>Email</th>
+                                        <th>Thời gian tạo</th>
+                                        <th>Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each accounts}}
+
+                                    <tr>
+                                        <th scope="row">{{sum @index 1}}</th>
+                                        <td>{{this.name}}</td>
+                                        <td>{{this.email}}</td>
+                                        <td>{{this.created_at}}</td>
+                                        <td>
+                                            <a href="" class="btn btn-link btn-restore" data-id="{{this.id}}">Khôi
+                                                phục</a>
+                                            <a href="" class="btn btn-link" data-id="{{this.id}}" data-bs-toggle="modal"
+                                                data-bs-target="#delete-course-modal">xóa vĩnh viễn</a>
+                                        </td>
+                                    </tr>
+                                    {{else}}
+                                    <tr>
+                                        <td colspan="5">Thùng rác rỗng <a href="/admin/view">quay lại danh sách tài
+                                                khoản</a></td>
+                                        {{/each}}
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end content -->
+
+</div>
+<!-- END content-page -->
+
+
+{{!-- confirm delete course --}}
+<div id="delete-course-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa tài khoản</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>hành động này không thể khôi phuc. bạn vẫn muốn xóa tài khoản này?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button id="btn-delete-course" type="button" class="btn btn-danger">Xóa vĩnh viễn</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- //delete --}}
+<form name="delete-course-form" method="post">
+</form>
+{{!-- restore --}}
+<form name="restore-course-form" method="post">
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var adminId;
+        var deleteform = document.forms['delete-course-form'];
+        var restoreform = document.forms['restore-course-form'];
+        var btnDeleteCourse = document.getElementById('btn-delete-course');
+        var restoreBtns = $('.btn-restore')
+
+
+        //when dialog confirm is clicked
+        $('#delete-course-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var id = button.data('id'); // Extract info from data-* attributes
+            adminId = button.data('id');
+        });
+        //when delete course btn click
+        btnDeleteCourse.onclick = function (event) {
+            deleteform.action = '/admin/' + adminId + '/force?_method=DELETE';//set thêm action cho form
+            deleteform.submit();
+        }
+
+        restoreBtns.click(function (event) {
+            event.preventDefault();
+            var courseId = $(this).data('id');
+
+            restoreform.action = '/admin/' + courseId + '/restore?_method=PATCH';//set thêm action cho form
+            restoreform.submit();
+        });
+
+
+    });
+
+</script>

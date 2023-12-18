@@ -1,0 +1,112 @@
+<!-- ============================================================== -->
+<!-- Start Page Content here -->
+<!-- ============================================================== -->
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start container-fluid -->
+        <div class="container-fluid">
+            <!-- row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mt-5">
+                        <h5 class="font-14">Danh sách đơn hàng</h5>
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Mã đơn hàng</th>
+                                        <th>Tên người nhận</th>
+                                        <th>SĐT </th>
+                                        <th>Địa chỉ</th>
+                                        <th>Trạng thái</th>
+                                        <th>Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each orderitems }}
+
+                                    <tr>
+                                        <th scope="row">{{sum @index 1}}</th>
+                                        <td>{{this.order_code}}</td>
+                                        <td>{{this.order_name}}</td>
+                                        <td>{{this.order_sdt}}</td>
+                                        <td>{{this.order_address}}</td>
+                                        <td>{{this.order_status}}</td>
+                                        <td>
+                                            <a href="/admin/brand/{{this.id}}/edit" className="btn btn-link">sửa</a>
+                                            <a href="" className="btn btn-link" data-id="{{this.id}}"
+                                                data-bs-toggle="modal" data-bs-target="#delete-brand-modal">xóa</a>
+                                        </td>
+                                    </tr>
+                                    {{else}}
+                                    <tr>
+                                        <td colSpan="5">Bạn chưa có đơn hàng nào
+                                            <a href="/admin/brand/create">Thêm mới đơn hàng
+                                            </a>
+                                        </td>
+                                        {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end content -->
+
+</div>
+<!-- END content-page -->
+
+</div>
+
+
+{{!-- confirm delete admin --}}
+<div id="delete-brand-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa đơn hàng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn xóa đơn hàng {{this.name}} không</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button id="btn-delete-brand" type="button" class="btn btn-danger">chuyển vào thùng rác</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- delete hidden form --}}
+<form name="delete-brand-form" method="post">
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var brandId;
+        var deleteform = document.forms['delete-brand-form'];
+        var btnDeletebrand = document.getElementById('btn-delete-brand');
+
+
+        //when dialog confirm is clicked
+        $('#delete-brand-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var id = button.data('id'); // Extract info from data-* attributes
+            brandId = button.data('id');
+        });
+        //when delete admin btn click
+        btnDeletebrand.onclick = function (event) {
+            deleteform.action = '/admin/brand/' + brandId + '/?_method=DELETE';//set thêm action cho form
+            deleteform.submit();
+        }
+    });
+
+</script>

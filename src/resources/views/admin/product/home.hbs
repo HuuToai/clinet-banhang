@@ -1,0 +1,161 @@
+<!-- ============================================================== -->
+<!-- Start Page Content here -->
+<!-- ============================================================== -->
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start container-fluid -->
+        <div class="container-fluid">
+
+            <!-- start  -->
+            <div class="row">
+                <div class="col-12">
+                    {{!-- {{#if count }} --}}
+                    <a class="btn btn-outline-danger" href="/admin/product/trash">Thùng rác <i
+                            class="fa fa-trash-o"></i>
+                        ({{count}})</a>
+                    {{!-- {{/if}} --}}
+                    <div style="display: inline-block !important;" class="btn-create-admins">
+                        <a href="/admin/product/create" class="btn btn-outline-primary create-admins">Tạo mới thương
+                            hiệu</a>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <form action="/admin/product/search" method="post" class="form mt-4 mt-lg-0">
+                            <div class="form-group">
+                                <label class="control-label mt-3 mt-lg-0" for="example-input1-group2">Tìm kiếm sản phẩm
+                                    theo tên</label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <button type="button" class="btn btn-primary"><i
+                                                class="fa fa-search"></i></button>
+                                    </span>
+                                    <input type="text" id="example-input1-group2" name="search" class="form-control"
+                                        placeholder="search tên sản phẩm...">
+                                </div>
+                            </div>
+                            <!-- form-group -->
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row -->
+
+            <!-- row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mt-5">
+                        <h5 class="font-14">Danh sách Sản phẩm</h5>
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên Sản phẩm</th>
+                                        <th>Số Lượng còn</th>
+                                        <th>Đã bán</th>
+                                        <th>Ảnh Sản Phẩm</th>
+                                        <th>Giá nhập</th>
+                                        <th>Giá bán</th>
+                                        <th>Người cập nhật</th>
+                                        <th>Trạng Thái</th>
+                                        <th>Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each products }}
+
+                                    <tr>
+                                        <th scope="row">{{sum @index 1}}</th>
+                                        <td>{{this.name}}</td>
+                                        <td>{{this.quantity}}</td>
+                                        <td>{{this.sold}}</td>
+                                        <td><img src="{{ window.location.origin }}/uploads/products/{{this.image}}"
+                                                width="80px" height="80px" alt="Ảnh Sản phẩm" title="{{this.image}}">
+                                        </td>
+                                        <td>{{this.price_in}}</td>
+                                        <td>{{this.price}}</td>
+                                        <td>{{this.updatedBy}}</td>
+                                        <td>
+                                            <input disabled name="status" type="checkbox" value="{{this.status}}" {{#if
+                                                (eq this.status 1)}}checked {{else if (eq this.status 0)}} unchecked
+                                                {{/if}} data-plugin="switchery" data-color="#ff7aa3" data-size="small">
+                                            <!-- Giá trị mặc định khi checkbox không được chọn -->
+                                        </td>
+                                        <td>
+                                            <a href="/admin/product/{{this.id}}/edit" className="btn btn-link">sửa</a>
+                                            <a href="" className="btn btn-link" data-id="{{this.id}}"
+                                                data-bs-toggle="modal" data-bs-target="#delete-brand-modal">xóa</a>
+                                        </td>
+                                    </tr>
+                                    {{else}}
+                                    <tr>
+                                        <td colSpan="5">Bạn chưa có Sản phẩm nào
+                                            <a href="/admin/product/create">Thêm mới Sản phẩm
+                                            </a>
+                                        </td>
+                                        {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end content -->
+
+</div>
+<!-- END content-page -->
+
+</div>
+
+
+{{!-- confirm delete admin --}}
+<div id="delete-brand-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa Sản phẩm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn xóa Sản phẩm không</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button id="btn-delete-brand" type="button" class="btn btn-danger">chuyển vào thùng rác</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- delete hidden form --}}
+<form name="delete-brand-form" method="post">
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var brandId;
+        var deleteform = document.forms['delete-brand-form'];
+        var btnDeletebrand = document.getElementById('btn-delete-brand');
+
+
+        //when dialog confirm is clicked
+        $('#delete-brand-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var id = button.data('id'); // Extract info from data-* attributes
+            brandId = button.data('id');
+        });
+        //when delete admin btn click
+        btnDeletebrand.onclick = function (event) {
+            deleteform.action = '/admin/product/' + brandId + '/?_method=DELETE';//set thêm action cho form
+            deleteform.submit();
+        }
+    });
+
+</script>

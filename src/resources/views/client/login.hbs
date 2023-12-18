@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập | Khách Hàng</title>
+    <link rel="stylesheet" href="/client/css/login/style.css">
+
+    {{!-- Thông báo toastr --}}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+</head>
+
+<body>
+    {{{ toastr }}}
+
+
+    <div class="container">
+        <div class="screen">
+            <div class="screen__content">
+                <form action="/process-login" method="POST" class="login" onsubmit="return validateForm()">
+                    <div class="login__field">
+                        <i class="login__icon fas fa-user"></i>
+                        <input type="text" name="email" id="email" class="login__input" placeholder="Email">
+                        <div id="emailError" class="error-message"></div>
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon fas fa-lock"></i>
+                        <input type="password" name="password" id="password" class="login__input"
+                            placeholder="Password">
+                        <div id="passwordError" class="error-message"></div>
+                    </div>
+                    <button type="submit" class="button login__submit">
+                        <span class="button__text">Đăng Nhập</span>
+                        <i class="button__icon fas fa-chevron-right"></i>
+                    </button>
+                </form>
+                <div class="social-login">
+                    <a href="/register">
+                        <h3>Đăng ký</h3>
+                    </a>
+                </div>
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            // Lấy giá trị từ các trường input
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            // Kiểm tra xem email và password có được nhập hay không
+            if (!email) {
+                document.getElementById('emailError').innerText = 'Vui lòng nhập email';
+                return false;
+            } else {
+                document.getElementById('emailError').innerText = '';
+            }
+
+            // Kiểm tra định dạng email
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').innerText = 'Định dạng email không hợp lệ';
+                return false;
+            } else {
+                document.getElementById('emailError').innerText = '';
+            }
+
+            if (!password) {
+                document.getElementById('passwordError').innerText = 'Vui lòng nhập mật khẩu';
+                return false;
+            } else {
+                document.getElementById('passwordError').innerText = '';
+            }
+
+            // Nếu mọi thứ hợp lệ, cho phép gửi biểu mẫu
+            return true;
+        }
+    </script>
+</body>
+
+</html>

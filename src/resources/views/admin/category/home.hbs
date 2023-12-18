@@ -1,0 +1,149 @@
+<!-- ============================================================== -->
+<!-- Start Page Content here -->
+<!-- ============================================================== -->
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start container-fluid -->
+        <div class="container-fluid">
+
+            <!-- start  -->
+            <div class="row">
+                <div class="col-12">
+                    {{!-- {{#if count }} --}}
+                    <a class="btn btn-outline-danger" href="/admin/category/trash">Thùng rác <i
+                            class="fa fa-trash-o"></i>
+                        ({{count}})</a>
+                    {{!-- {{/if}} --}}
+                    <div style="display: inline-block !important;" class="btn-create-admins">
+                        <a href="/admin/category/create" class="btn btn-outline-primary create-admins">Tạo mới thương
+                            hiệu</a>
+                    </div>
+                    <div class="col-lg-4">
+                        <form action="/admin/product/search" method="post" class="form mt-4 mt-lg-0">
+                            <div class="form-group">
+                                <label class="control-label mt-3 mt-lg-0" for="example-input1-group2">Tìm kiếm danh mục
+                                    theo tên</label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <button type="button" class="btn btn-primary"><i
+                                                class="fa fa-search"></i></button>
+                                    </span>
+                                    <input type="text" id="example-input1-group2" name="search" class="form-control"
+                                        placeholder="search tên danh mục...">
+                                </div>
+                            </div>
+                            <!-- form-group -->
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row -->
+
+            <!-- row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mt-5">
+                        <h5 class="font-14">Danh sách Thể Loại</h5>
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên Thể Loại</th>
+                                        <th>Slug</th>
+                                        <th>LOGO</th>
+                                        <th>Mô tả</th>
+                                        <th>Người cập nhật</th>
+                                        <th>Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each categories }}
+
+                                    <tr>
+                                        <th scope="row">{{sum @index 1}}</th>
+                                        <td>{{this.name}}</td>
+                                        <td>{{this.slug}}</td>
+                                        <td><img src="{{ window.location.origin }}/uploads/categories/{{this.image}}"
+                                                width="80px" height="80px" alt="Ảnh Thể Loại" title="{{this.image}}">
+                                        </td>
+                                        <td>{{this.description}}</td>
+                                        <td>{{this.updatedBy}}</td>
+                                        <td>
+                                            <a href="/admin/category/{{this.id}}/edit" className="btn btn-link">sửa</a>
+                                            <a href="" className="btn btn-link" data-id="{{this.id}}"
+                                                data-bs-toggle="modal" data-bs-target="#delete-category-modal">xóa</a>
+                                        </td>
+                                    </tr>
+                                    {{else}}
+                                    <tr>
+                                        <td colSpan="5">Bạn chưa có Thể Loại nào
+                                            <a href="/admin/category/create">Thêm mới Thể Loại
+                                            </a>
+                                        </td>
+                                        {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end content -->
+
+</div>
+<!-- END content-page -->
+
+</div>
+
+
+{{!-- confirm delete admin --}}
+<div id="delete-category-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa Thể Loại</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn xóa Thể Loại {{this.name}} không</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button id="btn-delete-category" type="button" class="btn btn-danger">chuyển vào thùng rác</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- delete hidden form --}}
+<form name="delete-category-form" method="post">
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var categoryId;
+        var deleteform = document.forms['delete-category-form'];
+        var btnDeletecategory = document.getElementById('btn-delete-category');
+
+
+        //when dialog confirm is clicked
+        $('#delete-category-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var id = button.data('id'); // Extract info from data-* attributes
+            categoryId = button.data('id');
+        });
+        //when delete admin btn click
+        btnDeletecategory.onclick = function (event) {
+            deleteform.action = '/admin/category/' + categoryId + '/?_method=DELETE';//set thêm action cho form
+            deleteform.submit();
+        }
+    });
+
+</script>
