@@ -8,6 +8,7 @@ function connect() {
         {
             host: '103.18.6.239',
             dialect: 'mysql',
+            timezone: '+07:00', // Đặt múi giờ Việt Nam
         },
     );
 

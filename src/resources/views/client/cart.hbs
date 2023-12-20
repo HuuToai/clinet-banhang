@@ -78,28 +78,27 @@
                                 <td class="product-name">
                                     <h2 class="h5 text-black">{{this.productName}}</h2>
                                 </td>
-                                <td>{{this.price}} VNĐ</td>
+                                <td>{{formatPrice this.price}} </td>
                                 <td>
                                     <div class="input-group mb-3 d-flex align-items-center quantity-container"
                                         style="max-width: 120px;">
-                                        <div class="quantityProduct">{{this.productquantity}}</div>
-                                        <div class="input-group-prepend">
+                                        {{!-- <div class="input-group-prepend">
                                             <button class="btn btn-outline-black decrease"
                                                 type="button">&minus;</button>
-                                        </div>
-                                        <input name="quantity" type="text"
+                                        </div> --}}
+                                        <input name="quantity" type="number"
                                             class="form-control text-center quantity-amount" id="inputMax"
                                             value="{{this.quantity}}" min="1" max="{{this.productquantity}}"
                                             placeholder="" aria-label="Example text with button addon"
                                             aria-describedby="button-addon1">
-                                        <div class="input-group-append">
+                                        {{!-- <div class="input-group-append">
                                             <button class="btn btn-outline-black increase" type="button">&plus;</button>
-                                        </div>
+                                        </div> --}}
                                     </div>
 
                                 </td>
                                 <input type="text" value="{{this.productId}}" name="product_id" hidden>
-                                <td>{{this.itemTotal}}</td>
+                                <td>{{formatPrice this.itemTotal}}</td>
                                 <td>
                                     <a href="/{{this.productId}}/delete-item-cart" class="btn btn-black btn-sm"><i
                                             class="fas fa-times"></i></a>
@@ -108,7 +107,7 @@
                             {{/each}}
                         </tbody>
                     </table>
-                    <p>Tổng tiền: {{total}}</p>
+                    <p>Tổng tiền: {{formatPrice total}}</p>
                 </div>
                 <div class="col-md-6 mb-3 mb-md-0">
                     <button class="btn btn-black btn-sm btn-block">Cập nhật giỏ hàng</button>
@@ -159,7 +158,7 @@
                                 <span class="text-black">Tổng tiền</span>
                             </div>
                             <div class="col-md-6 text-right">
-                                <strong class="text-black">{{total}} VNĐ</strong>
+                                <strong class="text-black">{{formatPrice total}}</strong>
                             </div>
                         </div>
 
@@ -175,16 +174,3 @@
         </div>
     </div>
 </div>
-
-
-<script>
-
-    var max = document.getElementById("inputMax");
-    function check() {
-        if (gt(min.value, max.value)) {
-            min.value = max.value;
-        }
-    };
-
-    max.addEventListener("input", check, false);
-</script>

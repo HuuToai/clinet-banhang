@@ -4,6 +4,7 @@ const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize({
     dialect: 'mysql',
+    timezone: '+07:00', // Đặt múi giờ Việt Nam
     host: '103.18.6.239',
     username: 'v2wrml5xinov_userlocal',
     password: 'adminlocal',

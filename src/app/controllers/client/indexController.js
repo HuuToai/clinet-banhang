@@ -1,6 +1,7 @@
 // const Index = require("../../models/client/indexModel");
 const Product = require('../../models/admin/productModel');
 const OrderDetail = require('../../models/client/orderModel');
+const DetailOrder = require('../../models/client/detail_order');
 const User = require('../../models/client/userModel');
 const Order = require('../../models/client/order_model');
 const Shipping = require('../../models/client/shipModel');
@@ -99,6 +100,11 @@ class indexController {
         const orderCode = req.session.cartuserid;
         // Tìm sản phẩm trong cơ sở dữ liệu
         Product.findByPk(productId, { raw: true }).then((product) => {
+            if (!product || product.quantity <= 0) {
+                // Kiểm tra nếu sản phẩm không tồn tại hoặc số lượng sản phẩm trong kho đã hết
+                req.toastr.error('Sản phẩm không khả dụng.', 'Hết hàng');
+                return res.redirect('/cart');
+            }
             // Thêm sản phẩm vào order_details với orderCode và productId
             OrderDetail.findOne({
                 where: {
@@ -247,6 +253,7 @@ class indexController {
             });
         }
     }
+
     async processLogin(req, res, next) {
         const email = req.body.email;
         const password = req.body.password;
@@ -419,7 +426,6 @@ class indexController {
     }
 
     submit_checkout(req, res, next) {
-        const self = this; // Gán 'this' vào một biến
         const orderCode = req.session.cartuserid;
 
         // Thêm thông tin vận chuyển (shipping)
@@ -431,10 +437,12 @@ class indexController {
             method: req.body.shipping_method,
         };
 
+        let shippingId;
+
+        // Thêm thông tin vận chuyển (shipping) và lấy shipping ID đã thêm
         Shipping.create(shippingInfo)
             .then((shipping) => {
-                // Lấy shipping ID đã thêm
-                const shippingId = shipping.id;
+                shippingId = shipping.id;
 
                 // Thêm thông tin đơn hàng (order)
                 const orderInfo = {
@@ -445,9 +453,57 @@ class indexController {
                 return Order.create(orderInfo);
             })
             .then((order) => {
-                // Sử dụng biến 'self' thay vì 'this'
-                res.redirect('/delete-cart');
+                // Lấy thông tin đơn hàng (orderDetail) bằng orderCode
+                return OrderDetail.findAll({
+                    where: {
+                        order_code: orderCode,
+                    },
+                });
+            })
+            .then((orderDetails) => {
+                // Tạo bản sao vào bảng detailorder
+                const copyPromises = orderDetails.map((orderDetail) => {
+                    return DetailOrder.create({
+                        order_code: orderDetail.order_code,
+                        product_id: orderDetail.product_id,
+                        quantity: orderDetail.quantity,
+                        // Copy other relevant fields if needed
+                    });
+                });
+
+                return Promise.all(copyPromises);
+            })
+            .then((orderDetails) => {
+                // Cập nhật số lượng sản phẩm và số lượng bán
+                const updateProductPromises = orderDetails.map(
+                    (orderDetail) => {
+                        return Product.findOne({
+                            where: {
+                                id: orderDetail.product_id,
+                            },
+                        }).then((product) => {
+                            if (product) {
+                                // Cập nhật số lượng sản phẩm còn lại và số lượng bán
+                                const newQuantity =
+                                    product.quantity - orderDetail.quantity;
+                                const newSales =
+                                    product.sold + orderDetail.quantity;
+                                return product.update({
+                                    quantity: newQuantity,
+                                    sold: newSales,
+                                });
+                            }
+                        });
+                    },
+                );
+
+                return Promise.all(updateProductPromises);
+                // res.redirect("/delete-cart");
+
                 // res.redirect("/thanks"); // Chuyển hướng sau khi đơn hàng được tạo thành công
+            })
+            .then(() => {
+                res.redirect('/delete-cart');
             })
             .catch((error) => {
                 next(error);

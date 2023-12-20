@@ -1,0 +1,86 @@
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start container-fluid -->
+        <div class="container-fluid">
+            <div class="col-12">
+
+                <div style="display: inline-block !important;" class="btn-create-admins">
+                    <a href="/admin/order" class="btn btn-outline-primary create-admins">Danh sách đơn hàng</a>
+                </div>
+
+                <div class="col-lg-4">
+                    <form action="/admin/product/search" method="post" class="form mt-4 mt-lg-0">
+                        <div class="form-group">
+                            <label class="control-label mt-3 mt-lg-0" for="example-input1-group2">Tìm kiếm sản phẩm
+                                theo tên</label>
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                </span>
+                                <input type="text" id="example-input1-group2" name="search" class="form-control"
+                                    placeholder="search tên sản phẩm...">
+                            </div>
+                        </div>
+                        <!-- form-group -->
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    Danh Sách Đặt Hàng
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">STT</th>
+                                <th scope="col">Mã Đặt Hàng</th>
+                                <th scope="col">Tên Sản Phẩm</th>
+                                <th scope="col">Hình Ảnh SP</th>
+                                <th scope="col">Giá Sản Phẩm</th>
+                                <th scope="col">Số Lượng</th>
+                                <th scope="col">Thành Tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each cartItems}}
+                            <tr>
+                                <th scope="row">{{sum @index 1}}</th>
+                                <td>{{this.order_code}}</td>
+                                <td>{{this.productName}}</td>
+                                <td><img src="{{ window.location.origin }}/uploads/products/{{this.productImage}}"
+                                        width="100px" height="100px" alt="Ảnh Thể Loại" title="{{this.productImage}}">
+                                </td>
+                                <td>{{formatPrice this.price}}</td>
+                                <td>{{this.quantity}}</td>
+                                <td>{{formatPrice (calculateTotal this.quantity this.price)}} </td>
+                                <td></td>
+                            </tr>
+                            {{/each}}
+                            <tr>
+                                <td>
+                                    {{!-- <select class="xulydonhang form-control">
+                                        {{#if (eq order_status 1)}}
+                                        <option selected value="0" id="{{order_code}}">---Xử Lý Đơn Hàng---</option>
+                                        <option value="2" id="{{order_code}}">Đơn Hàng Đã Được Xử Lý</option>
+                                        <option value="3" id="{{order_code}}">Đã Hủy</option>
+                                        {{else if (eq order_status 2)}}
+                                        <option value="0" id="{{order_code}}">---Xử Lý Đơn Hàng---</option>
+                                        <option selected value="2" id="{{order_code}}">Đơn Hàng Đã Được Xử Lý</option>
+                                        <option value="3" id="{{order_code}}">Đã Hủy</option>
+                                        {{else}}
+                                        <option value="0" id="{{order_code}}">---Xử Lý Đơn Hàng---</option>
+                                        <option value="2" id="{{order_code}}">Đơn Hàng Đã Được Xử Lý</option>
+                                        <option selected value="3" id="{{order_code}}">Đã Hủy</option>
+                                        {{/if}}
+                                    </select> --}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

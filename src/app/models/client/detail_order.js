@@ -1,11 +1,9 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../../config/sequelize');
-const Shipping = require('../client/shipModel');
-const DetailOrder = require('../client/detail_order');
 const Product = require('../admin/productModel');
-
-const Order = sequelize.define(
-    'Order',
+const Order = require('./order_model');
+const Detail_order = sequelize.define(
+    'Detail_order',
     {
         id: {
             type: DataTypes.INTEGER,
@@ -16,17 +14,18 @@ const Order = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        shipping_id: {
+        product_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        status: {
+        quantity: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             defaultValue: 1,
         },
     },
     {
-        tableName: 'orders',
+        tableName: 'detail_orders',
         createdAt: 'created_at',
         updatedAt: 'updated_at',
         deletedAt: 'deletedAt',
@@ -36,9 +35,15 @@ const Order = sequelize.define(
         timestamps: true,
     },
 );
-Order.belongsTo(Shipping, { foreignKey: 'shipping_id', as: 'shipping' });
 
-Order.sync({
+Detail_order.belongsTo(Product, {
+    foreignKey: 'product_id',
+    as: 'product',
+    constraints: false,
+});
+
+// Trong model DetailOrder
+Detail_order.sync({
     alter: true,
 })
     .then(() => {
@@ -47,4 +52,4 @@ Order.sync({
     .catch((error) => {
         console.error('Lỗi khi cập nhật cơ sở dữ liệu:', error);
     });
-module.exports = Order;
+module.exports = Detail_order;

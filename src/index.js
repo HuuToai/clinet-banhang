@@ -1,5 +1,4 @@
 const express = require('express');
-// const session = require("express-session");
 const { engine } = require('express-handlebars');
 const app = express();
 const session = require('express-session');
@@ -66,6 +65,17 @@ app.engine(
             },
             gt: (a, b) => a > b, // so sánh a > b
             lt: (a, b) => a < b, // so sánh a < b
+            calculateTotal: function (quantity, price) {
+                return quantity * price;
+            },
+            formatPrice: (amount) => {
+                const formattedPrice = new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND',
+                }).format(amount);
+
+                return formattedPrice;
+            },
         },
     }),
 );
