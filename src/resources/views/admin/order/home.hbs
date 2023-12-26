@@ -94,9 +94,9 @@
 
                                         </td>
                                         <td>
-                                            <a href="" className="btn btn-link" data-id="{{this.order_code}}"
-                                                data-bs-toggle="modal" data-bs-target="#delete-brand-modal">xóa</a>
-                                            <a href="/admin/order/{{this.order_code}}/view?q={{this.order_time}}"
+                                            {{!-- <a href="" className="btn btn-link" data-id="{{this.order_id}}"
+                                                data-bs-toggle="modal" data-bs-target="#delete-order-modal">xóa</a> --}}
+                                            <a href="/admin/order/{{this.order_code}}/view?q={{this.order_id}}"
                                                 className="btn btn-link">Chi
                                                 tiết
                                                 đơn hàng</a>
@@ -126,12 +126,58 @@
 <!-- END content-page -->
 
 </div>
+{{!-- confirm delete brand --}}
+<div id="delete-order-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa vĩnh viễn</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>hành động này không thể khôi phuc. bạn vẫn muốn xóa đơn hàng này?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button id="btn-delete-order" type="button" class="btn btn-danger">Xóa vĩnh viễn</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- //delete --}}
+<form name="delete-order-form" method="post">
+</form>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var orderid;
+        var deleteform = document.forms['delete-order-form'];
+        var btnDeleteBrand = document.getElementById('btn-delete-order');
+
+
+        //when dialog confirm is clicked
+        $('#delete-order-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            orderid = button.data('id');
+        });
+        //when delete brand btn click
+        btnDeleteBrand.onclick = function (event) {
+            deleteform.action = '/admin/order/' + orderid + '/force?_method=DELETE';//set thêm action cho form
+            deleteform.submit();
+        }
+
+
+    });
+
+</script>
 
 <script>
     $('.xulydonhang').change(function () {
-        const status = $(this).val();
-        const order_code = $(this).find(':selected').attr('id');
-        const order_id = $(this).data('order-id');
+        var status = $(this).val();
+        var order_code = $(this).find(':selected').attr('id');
+        var order_id = $(this).data('order-id');
         if (status == 0) {  // Thay đổi từ "value" thành "status"
             alert('Vui Lòng Chọn Xử Lý Đơn Hàng');
         } else {

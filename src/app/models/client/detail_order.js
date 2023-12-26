@@ -23,6 +23,14 @@ const Detail_order = sequelize.define(
             allowNull: false,
             defaultValue: 1,
         },
+        price: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        orderid: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
     },
     {
         tableName: 'detail_orders',

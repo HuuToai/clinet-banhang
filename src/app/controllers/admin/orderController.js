@@ -135,26 +135,10 @@ class orderController {
     }
     async view(req, res, next) {
         const ordercode = req.params.id;
-        let order_time = req.query.q;
-
-        // Chuyển đổi thành đối tượng Date sử dụng UTC
-        order_time = new Date(order_time + ' UTC');
-
-        const year = order_time.getUTCFullYear();
-        const month = (order_time.getUTCMonth() + 1)
-            .toString()
-            .padStart(2, '0');
-        const day = order_time.getUTCDate().toString().padStart(2, '0');
-        const hours = order_time.getUTCHours().toString().padStart(2, '0');
-        const minutes = order_time.getUTCMinutes().toString().padStart(2, '0');
-        const seconds = order_time.getUTCSeconds().toString().padStart(2, '0');
-
-        // Định dạng theo "YYYY-MM-DD HH:mm:ss"
-        const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
+        const orderid = req.query.q;
         DetailOrder.findAll({
             where: {
-                created_at: formattedDateTime,
+                orderid: orderid,
                 order_code: ordercode,
             },
             include: [
@@ -169,7 +153,7 @@ class orderController {
                 let totalQuantity = 0; // Tổng số lượng sản phẩm
                 let cartItems = [];
                 orders.forEach((order) => {
-                    const itemTotal = order.quantity * order.product.price;
+                    const itemTotal = order.quantity * order.price;
                     totalQuantity += order.quantity; // Cộng thêm số lượng sản phẩm
                     total += itemTotal;
 
@@ -180,7 +164,7 @@ class orderController {
                         productName: order.product.name,
                         productImage: order.product.image,
                         quantity: order.quantity,
-                        price: order.product.price,
+                        price: order.price,
                         itemTotal: itemTotal,
                     };
 
@@ -244,20 +228,19 @@ class orderController {
             });
         }
     }
-    forceDestroy(res, req, next) {
-        console.log('idđ', req.params.id);
-        //   Order.destroy({
-        //     where: {
-        //         id: req.params.id,
-        //     },
-        //     force: true,
-        // })
-        //     .then(() => {
-        //         res.redirect('back');
-        //     })
-        //     .catch((err) => {
-        //         next(err);
-        //     });
+    forceDestroy(req, res, next) {
+        Order.destroy({
+            where: {
+                id: req.params.id,
+            },
+            force: true,
+        })
+            .then(() => {
+                res.redirect('back');
+            })
+            .catch((err) => {
+                next(err);
+            });
     }
 }
 

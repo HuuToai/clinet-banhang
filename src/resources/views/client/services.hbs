@@ -18,7 +18,7 @@
                 </li>
                 <li><a class="nav-link" href="/shop">Cửa Hàng</a></li>
                 <li><a class="nav-link" href="/about">Về chúng tôi</a></li>
-                <li class="active"><a class="nav-link" href="/services">Dịch vụ</a></li>
+                <li class="active"><a class="nav-link" href="/services">Đơn hàng đã đặt</a></li>
                 <li><a class="nav-link" href="/blog">Bài viết</a></li>
                 <li><a class="nav-link" href="/contact">Liên hệ với chúng tôi</a></li>
             </ul>
@@ -53,7 +53,7 @@
         <div class="row justify-content-between">
             <div class="col-lg-5">
                 <div class="intro-excerpt">
-                    <h1>Dịch vụ</h1>
+                    <h1>Đơn hàng đã đặt</h1>
                 </div>
             </div>
             <div class="col-lg-7">
@@ -63,3 +63,77 @@
     </div>
 </div>
 <!-- End Hero Section -->
+
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start container-fluid -->
+        <div class="container-fluid">
+            <!-- row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mt-5">
+                        <h5 class="font-14">Danh sách đơn hàng</h5>
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Mã đơn hàng</th>
+                                        <th>Tên người nhận</th>
+                                        <th>SĐT </th>
+                                        <th>Địa chỉ</th>
+                                        <th>Trạng thái</th>
+                                        <th>Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each orderitems }}
+
+                                    <tr>
+                                        <th scope="row">{{sum @index 1}}</th>
+                                        <td>{{this.order_code}}</td>
+                                        <td>{{this.order_name}}</td>
+                                        <td>{{this.order_sdt}}</td>
+                                        <td>{{this.order_address}}</td>
+
+                                        <td>
+                                            {{#if (eq this.order_status 1)}}
+                                            <span class="text text-primary">Đang Chờ Xử Lý</span>
+                                            {{else if (eq this.order_status 2)}}
+                                            <span class="text text-success">Đã Giao Hàng</span>
+                                            {{else}}
+                                            <span class="text text-danger">Đã Hủy</span>
+                                            {{/if}}
+                                        </td>
+                                        <td>
+                                            <a href="/{{this.order_code}}/viewDetailhistory?q={{this.order_id}}"
+                                                className="btn btn-link">Chi
+                                                tiết
+                                                đơn hàng</a>
+                                        </td>
+                                    </tr>
+                                    {{else}}
+                                    <tr>
+                                        <td colSpan="5">Bạn chưa có đơn hàng nào
+                                            <a href="/shop">Tiếp tục mua sắm
+                                            </a>
+                                        </td>
+                                        {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end content -->
+
+</div>
+<!-- END content-page -->
+
+</div>

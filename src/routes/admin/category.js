@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const categoryController = require('../../app/controllers/admin/categoryController');
+const { checkAuthentication } = require('../../app/middleWare/middleware');
+router.use(checkAuthentication);
+
 router.get('/create', categoryController.create);
 router.post('/store', categoryController.store);
 router.get('/:id/edit', categoryController.edit);

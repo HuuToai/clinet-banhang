@@ -6,7 +6,6 @@ const { Sequelize } = require('sequelize');
 const flash = require('connect-flash');
 const toastr = require('express-toastr');
 const db = require('./config/');
-const { checkAuthentication } = require('./app/middleWare/middleware');
 const { checklogin } = require('./app/middleWare/checklogin');
 
 const sequelize = require('./config/sequelize');
@@ -85,7 +84,6 @@ app.set('views', path.join(__dirname, 'resources', 'views')); //sửa lại nế
 
 console.log(__dirname + '/resources/views');
 //router init
-// app.use(checkAuthentication);
 route(app);
 app.listen(port, () =>
     console.log(`Example app listening at http://localhost:${port}`),
