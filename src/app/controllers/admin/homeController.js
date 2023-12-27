@@ -86,13 +86,6 @@ class homeController {
             });
 
             if (existingAdmin) {
-                // Nếu email đã tồn tại, báo lỗi
-                res.status(400).json({
-                    success: false,
-                    error: 'Email đã tồn tại',
-                });
-            } else {
-                // Nếu email chưa tồn tại, tiến hành tạo tài khoản
                 const hashedPassword = md5(req.body.password);
 
                 Admin.update(
@@ -116,6 +109,8 @@ class homeController {
                     user: req.session.user,
                     name: req.session.name,
                 });
+            } else {
+                // Nếu email chưa tồn tại, tiến hành tạo tài khoản
             }
         } catch (error) {
             console.error('Lỗi khi sửa tài khoản:', error);

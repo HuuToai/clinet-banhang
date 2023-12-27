@@ -21,6 +21,7 @@
                                         <th>SĐT </th>
                                         <th>Địa chỉ</th>
                                         <th>Trạng thái</th>
+                                        <th> Cập nhật Trạng thái</th>
                                         <th>Chức năng</th>
                                     </tr>
                                 </thead>
@@ -33,17 +34,78 @@
                                         <td>{{this.order_name}}</td>
                                         <td>{{this.order_sdt}}</td>
                                         <td>{{this.order_address}}</td>
-                                        <td>{{this.order_status}}</td>
+
                                         <td>
-                                            <a href="/admin/brand/{{this.id}}/edit" className="btn btn-link">sửa</a>
-                                            <a href="" className="btn btn-link" data-id="{{this.id}}"
-                                                data-bs-toggle="modal" data-bs-target="#delete-brand-modal">xóa</a>
+                                            {{#if (eq this.order_status 1)}}
+                                            <span class="text text-primary">Đang Chờ Xử Lý</span>
+                                            {{else if (eq this.order_status 2)}}
+                                            <span class="text text-success">Đã Giao Hàng</span>
+                                            {{else}}
+                                            <span class="text text-danger">Đã Hủy</span>
+                                            {{/if}}
+                                        </td>
+
+                                        <td>
+                                            {{!-- <form action="/admin/order/process" name="status-form" method="post"
+                                                id="orderForm">
+                                                <select class="xulydonhang form-control" id="orderSelect" name="status">
+                                                    {{#if (eq this.order_status 1)}}
+                                                    <option selected value="0">---Xử Lý Đơn Hàng---</option>
+                                                    <option value="2">Đơn Hàng Đã Được Xử Lý</option>
+                                                    <option value="3">Đã Hủy</option>
+                                                    {{else if (eq this.order_status 2)}}
+                                                    <option value="0">--Xử Lý Đơn Hàng--</option>
+                                                    <option selected value="2">Đơn Hàng Đã Được Xử Lý</option>
+                                                    <option value="3">Đã Hủy</option>
+                                                    {{else}}
+                                                    <option value="0">--Xử Lý Đơn Hàng--</option>
+                                                    <option value="2">Đơn Hàng Đã Được Xử Lý</option>
+                                                    <option selected value="3">Đã Hủy</option>
+                                                    {{/if}}
+                                                </select>
+
+                                                <!-- Thêm trường ẩn để giữ order_code -->
+                                                <input name="order_code" type="hidden" id="orderCode"
+                                                    value="{{this.order_code}}">
+
+                                                <!-- Sửa type của button thành "submit" để gửi form khi nút được nhấn -->
+                                                <button id="btn-status" type="submit">Gui</button>
+                                            </form> --}}
+                                            <select class="xulydonhang form-control" data-order-id="{{this.order_id}}">
+                                                {{#if (eq this.order_status 1)}}
+                                                <option selected value="0" id="{{this.order_code}}">--Xử Lý Đơn Hàng--
+                                                </option>
+                                                <option value="2" id="{{this.order_code}}">Đơn Hàng Đã Được Xử Lý
+                                                </option>
+                                                <option value="3" id="{{this.order_code}}">Đã Hủy</option>
+                                                {{else if (eq this.order_status 2)}}
+                                                <option value="0" id="{{this.order_code}}">--Xử Lý Đơn Hàng--</option>
+                                                <option selected value="2" id="{{this.order_code}}">Đơn Hàng Đã Được Xử
+                                                    Lý</option>
+                                                <option value="3" id="{{this.order_code}}">Đã Hủy</option>
+                                                {{else}}
+                                                <option value="0" id="{{this.order_code}}">--Xử Lý Đơn Hàng--</option>
+                                                <option value="2" id="{{this.order_code}}">Đơn Hàng Đã Được Xử Lý
+                                                </option>
+                                                <option selected value="3" id="{{this.order_code}}">Đã Hủy</option>
+                                                {{/if}}
+                                            </select>
+
+
+                                        </td>
+                                        <td>
+                                            {{!-- <a href="" className="btn btn-link" data-id="{{this.order_id}}"
+                                                data-bs-toggle="modal" data-bs-target="#delete-order-modal">xóa</a> --}}
+                                            <a href="/admin/order/{{this.order_code}}/view?q={{this.order_id}}"
+                                                className="btn btn-link">Chi
+                                                tiết
+                                                đơn hàng</a>
                                         </td>
                                     </tr>
                                     {{else}}
                                     <tr>
                                         <td colSpan="5">Bạn chưa có đơn hàng nào
-                                            <a href="/admin/brand/create">Thêm mới đơn hàng
+                                            <a href="#">Thêm mới đơn hàng
                                             </a>
                                         </td>
                                         {{/each}}
@@ -64,48 +126,70 @@
 <!-- END content-page -->
 
 </div>
-
-
-{{!-- confirm delete admin --}}
-<div id="delete-brand-modal" class="modal" tabindex="-1">
+{{!-- confirm delete brand --}}
+<div id="delete-order-modal" class="modal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Xóa đơn hàng</h5>
+                <h5 class="modal-title">Xóa vĩnh viễn</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Bạn chắc chắn muốn xóa đơn hàng {{this.name}} không</p>
+                <p>hành động này không thể khôi phuc. bạn vẫn muốn xóa đơn hàng này?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button id="btn-delete-brand" type="button" class="btn btn-danger">chuyển vào thùng rác</button>
+                <button id="btn-delete-order" type="button" class="btn btn-danger">Xóa vĩnh viễn</button>
             </div>
         </div>
     </div>
 </div>
 
-{{!-- delete hidden form --}}
-<form name="delete-brand-form" method="post">
+{{!-- //delete --}}
+<form name="delete-order-form" method="post">
 </form>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var brandId;
-        var deleteform = document.forms['delete-brand-form'];
-        var btnDeletebrand = document.getElementById('btn-delete-brand');
+        var orderid;
+        var deleteform = document.forms['delete-order-form'];
+        var btnDeleteBrand = document.getElementById('btn-delete-order');
 
 
         //when dialog confirm is clicked
-        $('#delete-brand-modal').on('show.bs.modal', function (event) {
+        $('#delete-order-modal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
-            var id = button.data('id'); // Extract info from data-* attributes
-            brandId = button.data('id');
+            orderid = button.data('id');
         });
-        //when delete admin btn click
-        btnDeletebrand.onclick = function (event) {
-            deleteform.action = '/admin/brand/' + brandId + '/?_method=DELETE';//set thêm action cho form
+        //when delete brand btn click
+        btnDeleteBrand.onclick = function (event) {
+            deleteform.action = '/admin/order/' + orderid + '/force?_method=DELETE';//set thêm action cho form
             deleteform.submit();
+        }
+
+
+    });
+
+</script>
+
+<script>
+    $('.xulydonhang').change(function () {
+        var status = $(this).val();
+        var order_code = $(this).find(':selected').attr('id');
+        var order_id = $(this).data('order-id');
+        if (status == 0) {  // Thay đổi từ "value" thành "status"
+            alert('Vui Lòng Chọn Xử Lý Đơn Hàng');
+        } else {
+            $.ajax({
+                method: 'POST',
+                url: '/admin/order/process',
+                data: { status: status, order_code: order_code, order_id: order_id },
+                success: function () {
+                    alert('Thay đổi thuộc tính đơn hàng thành công')
+                    location.reload();
+                }
+            });
         }
     });
 

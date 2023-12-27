@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const brandController = require('../../app/controllers/admin/brandController');
+const { checkAuthentication } = require('../../app/middleWare/middleware');
+router.use(checkAuthentication);
+
 router.get('/create', brandController.create);
 router.post('/store', brandController.store);
 router.get('/:id/edit', brandController.edit);

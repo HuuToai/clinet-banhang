@@ -11,6 +11,7 @@ router.get('/shop', indexController.shop);
 router.use(checklogin);
 router.get('/about', indexController.about);
 router.get('/services', indexController.services);
+router.get('/:id/viewDetailhistory', indexController.viewDetailhistory);
 router.get('/blog', indexController.blog);
 router.get('/contact', indexController.contact);
 router.get('/logout', indexController.logout);
