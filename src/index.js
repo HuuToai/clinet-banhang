@@ -28,6 +28,7 @@ app.use(express.json()); //XMLhttprequest fetch axios
 app.use(morgan('combined'));
 app.use(sessionmiddleware);
 app.use(flash());
+// Middleware để đọc dữ liệu từ form
 app.use(
     express.urlencoded({
         extended: true,
