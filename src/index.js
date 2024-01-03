@@ -1,5 +1,4 @@
 const express = require('express');
-// const session = require("express-session");
 const { engine } = require('express-handlebars');
 const app = express();
 const session = require('express-session');
@@ -7,7 +6,6 @@ const { Sequelize } = require('sequelize');
 const flash = require('connect-flash');
 const toastr = require('express-toastr');
 const db = require('./config/');
-const { checkAuthentication } = require('./app/middleWare/middleware');
 const { checklogin } = require('./app/middleWare/checklogin');
 
 const sequelize = require('./config/sequelize');
@@ -30,6 +28,7 @@ app.use(express.json()); //XMLhttprequest fetch axios
 app.use(morgan('combined'));
 app.use(sessionmiddleware);
 app.use(flash());
+// Middleware để đọc dữ liệu từ form
 app.use(
     express.urlencoded({
         extended: true,
@@ -66,6 +65,17 @@ app.engine(
             },
             gt: (a, b) => a > b, // so sánh a > b
             lt: (a, b) => a < b, // so sánh a < b
+            calculateTotal: function (quantity, price) {
+                return quantity * price;
+            },
+            formatPrice: (amount) => {
+                const formattedPrice = new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND',
+                }).format(amount);
+
+                return formattedPrice;
+            },
         },
     }),
 );
@@ -75,7 +85,6 @@ app.set('views', path.join(__dirname, 'resources', 'views')); //sửa lại nế
 
 console.log(__dirname + '/resources/views');
 //router init
-// app.use(checkAuthentication);
 route(app);
 app.listen(port, () =>
     console.log(`Example app listening at http://localhost:${port}`),

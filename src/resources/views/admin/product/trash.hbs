@@ -52,8 +52,8 @@
                                         <td><img src="{{ window.location.origin }}/uploads/products/{{this.image}}"
                                                 width="80px" height="80px" alt="Ảnh Sản phẩm" title="{{this.image}}">
                                         </td>
-                                        <td>{{this.price_in}}</td>
-                                        <td>{{this.price}}</td>
+                                        <td>{{formatPrice this.price_in}}</td>
+                                        <td>{{formatPrice this.price}}</td>
                                         <td>{{this.updatedBy}}</td>
                                         <td>
                                             <input disabled name="status" type="checkbox" value="{{this.status}}" {{#if

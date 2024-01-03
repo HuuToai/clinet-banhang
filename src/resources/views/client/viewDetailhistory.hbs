@@ -1,0 +1,135 @@
+<!-- Start Header/Navigation -->
+
+
+<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+
+    <div class="container">
+        <a class="navbar-brand" href="/">PHT<span>.</span></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+            aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+            <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/">Trang Chủ</a>
+                </li>
+                <li><a class="nav-link" href="/shop">Cửa Hàng</a></li>
+                <li><a class="nav-link" href="/about">Về chúng tôi</a></li>
+                <li class="active"><a class="nav-link" href="/services">Đơn hàng đã đặt</a></li>
+                <li><a class="nav-link" href="/blog">Bài viết</a></li>
+                <li><a class="nav-link" href="/contact">Liên hệ với chúng tôi</a></li>
+            </ul>
+
+            <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                        aria-expanded="false">{{username}}<img src="/client/images/user.svg"></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/login">Đăng nhập <i class="fa fa-sign-in"></i></a></li>
+                        <div class="dropdown-divider"></div>
+
+                        <li><a class="dropdown-item" href="/register">Đăng ký</a></li>
+                        <div class="dropdown-divider"></div>
+
+                        <li><a class="dropdown-item" href="/logout">Đăng xuất <i class="fa fa-sign-out"></i></a></li>
+                    </ul>
+                </li>
+                {{!-- <li><a class="nav-link" href="/login">{{username}}<img src="/client/images/user.svg"></a></li>
+                --}}
+                <li><a class="nav-link" href="/cart"><img src="/client/images/cart.svg"></a></li>
+            </ul>
+        </div>
+    </div>
+
+</nav>
+<!-- End Header/Navigation -->
+
+<!-- Start Hero Section -->
+<div class="hero">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Chi tiết đơn hàng của bạn</h1>
+                </div>
+            </div>
+            <div class="col-lg-7">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Hero Section -->
+
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start container-fluid -->
+        <div class="container-fluid">
+            <div class="col-12">
+
+                <div style="display: inline-block !important;" class="btn-create-admins">
+                    <a href="/services" class="btn btn-outline-primary create-admins">Danh sách đơn hàng đã đặt</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    Danh Sách Đặt Hàng
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">STT</th>
+                                <th scope="col">Mã Đặt Hàng</th>
+                                <th scope="col">Tên Sản Phẩm</th>
+                                <th scope="col">Hình Ảnh SP</th>
+                                <th scope="col">Giá Sản Phẩm</th>
+                                <th scope="col">Số Lượng</th>
+                                <th scope="col">Thành Tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each cartItems}}
+                            <tr>
+                                <th scope="row">{{sum @index 1}}</th>
+                                <td>{{this.order_code}}</td>
+                                <td>{{this.productName}}</td>
+                                <td><img src="{{ window.location.origin }}/uploads/products/{{this.productImage}}"
+                                        width="100px" height="100px" alt="Ảnh Thể Loại" title="{{this.productImage}}">
+                                </td>
+                                <td>{{formatPrice this.price}}</td>
+                                <td>{{this.quantity}}</td>
+                                <td>{{formatPrice (calculateTotal this.quantity this.price)}} </td>
+                                <td></td>
+                            </tr>
+                            {{/each}}
+                            <tr>
+                                <td>
+                                    {{!-- <select class="xulydonhang form-control">
+                                        {{#if (eq order_status 1)}}
+                                        <option selected value="0" id="{{order_code}}">---Xử Lý Đơn Hàng---</option>
+                                        <option value="2" id="{{order_code}}">Đơn Hàng Đã Được Xử Lý</option>
+                                        <option value="3" id="{{order_code}}">Đã Hủy</option>
+                                        {{else if (eq order_status 2)}}
+                                        <option value="0" id="{{order_code}}">---Xử Lý Đơn Hàng---</option>
+                                        <option selected value="2" id="{{order_code}}">Đơn Hàng Đã Được Xử Lý</option>
+                                        <option value="3" id="{{order_code}}">Đã Hủy</option>
+                                        {{else}}
+                                        <option value="0" id="{{order_code}}">---Xử Lý Đơn Hàng---</option>
+                                        <option value="2" id="{{order_code}}">Đơn Hàng Đã Được Xử Lý</option>
+                                        <option selected value="3" id="{{order_code}}">Đã Hủy</option>
+                                        {{/if}}
+                                    </select> --}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

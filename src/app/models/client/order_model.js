@@ -1,6 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../../config/sequelize');
 const Shipping = require('../client/shipModel');
+const DetailOrder = require('../client/detail_order');
+const Product = require('../admin/productModel');
 
 const Order = sequelize.define(
     'Order',
@@ -19,8 +21,8 @@ const Order = sequelize.define(
             allowNull: false,
         },
         status: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: 0,
+            type: DataTypes.INTEGER,
+            defaultValue: 1,
         },
     },
     {

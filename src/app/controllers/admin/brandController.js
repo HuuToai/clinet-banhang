@@ -223,7 +223,6 @@ class brandController {
     }
     // [DELETE] /admin/brand/:id/force
     forceDestroy(req, res, next) {
-        console.log('hello');
         Brand.destroy({
             where: {
                 id: req.params.id,
