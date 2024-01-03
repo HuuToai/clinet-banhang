@@ -8,6 +8,9 @@ const Shipping = require('../../models/client/shipModel');
 const sequelize = require('../../../config/sequelize');
 const md5 = require('md5');
 const { Op } = require('sequelize');
+
+const request = require('request');
+const moment = require('moment');
 class indexController {
     // [GET] /news
     index(req, res, next) {
@@ -102,6 +105,37 @@ class indexController {
                 cartuserid: req.session.cartuserid,
             });
         });
+    }
+    async update_status(req, res, next) {
+        const id = req.params.id;
+        try {
+            // Truy vấn cơ sở dữ liệu để cập nhật trạng thái đơn hàng
+            const updatedOrder = await Order.update(
+                { status: 3 },
+                { where: { id: id } },
+            );
+
+            if (updatedOrder[0] === 1) {
+                // Nếu có một bản ghi được cập nhật thành công
+                req.toastr.success(
+                    'hủy đơn hàng thành công',
+                    'Đã hủy đơn hàng',
+                );
+                res.redirect('/services');
+            } else {
+                // Nếu không có bản ghi nào được cập nhật
+                res.status(404).json({
+                    success: false,
+                    message: 'Không tìm thấy đơn hàng hoặc đã có lỗi xảy ra',
+                });
+            }
+        } catch (error) {
+            console.error('Lỗi khi xử lý đơn hàng:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Có lỗi xảy ra khi xử lý đơn hàng',
+            });
+        }
     }
     blog(req, res) {
         res.render('client/blog', {
@@ -399,17 +433,20 @@ class indexController {
         });
     }
 
-    deletecart(req, res) {
+    static Static_deletecart(req, res, next) {
         const orderCode = req.session.cartuserid;
-
         OrderDetail.destroy({
             where: {
                 order_code: orderCode,
             },
             force: true,
-        }).then(() => {
-            res.redirect('/cart');
-        });
+        }).then(() => {});
+    }
+
+    deletecart(req, res, next) {
+        indexController.Static_deletecart(req, res, next);
+        req.toastr.success('Xóa giỏ hàng thành công', 'Đã xóa giỏ hàng!');
+        res.redirect('/cart');
     }
 
     checkout(req, res) {
@@ -462,17 +499,11 @@ class indexController {
         });
     }
 
-    submit_checkout(req, res, next) {
+    static Static_submit_checkout(req, res, next) {
         const orderCode = req.session.cartuserid;
 
         // Thêm thông tin vận chuyển (shipping)
-        const shippingInfo = {
-            name: req.body.name,
-            address: req.body.address,
-            phone: req.body.phone,
-            note: req.body.note,
-            method: req.body.shipping_method,
-        };
+        const shippingInfo = req.session.shippingInfo;
 
         let shippingId;
         let orderid;
@@ -545,16 +576,255 @@ class indexController {
                 );
 
                 return Promise.all(updateProductPromises);
-                // res.redirect("/delete-cart");
-
-                // res.redirect("/thanks"); // Chuyển hướng sau khi đơn hàng được tạo thành công
             })
             .then(() => {
-                res.redirect('/delete-cart');
+                indexController.Static_deletecart(req, res, next);
+                res.render('client/thanks', {
+                    headclient: true,
+                    showNavbarClient: true,
+                    showFooterClient: true,
+                    jsclient: true,
+                    username: req.session.username,
+                    cartuserid: req.session.cartuserid,
+                });
             })
             .catch((error) => {
                 next(error);
             });
+    }
+
+    submit_checkout(req, res, next) {
+        req.session.shippingInfo = {
+            name: req.body.name,
+            address: req.body.address,
+            phone: req.body.phone,
+            note: req.body.note,
+            method: req.body.shipping_method,
+        };
+        indexController.Static_submit_checkout(req, res, next);
+    }
+
+    static sortObject(obj) {
+        let sorted = {};
+        let str = [];
+        let key;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                str.push(encodeURIComponent(key));
+            }
+        }
+        str.sort();
+        for (key = 0; key < str.length; key++) {
+            sorted[str[key]] = encodeURIComponent(obj[str[key]]).replace(
+                /%20/g,
+                '+',
+            );
+        }
+        return sorted;
+    }
+
+    create_payment_url(req, res, next) {
+        process.env.TZ = 'Asia/Ho_Chi_Minh';
+        req.session.shippingInfo = {
+            name: req.body.name,
+            address: req.body.address,
+            phone: req.body.phone,
+            note: req.body.note,
+            method: req.body.shipping_method,
+        };
+        let date = new Date();
+        let createDate = moment(date).format('YYYYMMDDHHmmss');
+
+        let ipAddr =
+            req.headers['x-forwarded-for'] ||
+            req.connection.remoteAddress ||
+            req.socket.remoteAddress ||
+            req.connection.socket.remoteAddress;
+
+        let config = require('config');
+
+        let tmnCode = config.get('vnp_TmnCode');
+        let secretKey = config.get('vnp_HashSecret');
+        let vnpUrl = config.get('vnp_Url');
+        let returnUrl = config.get('vnp_ReturnUrl');
+        let orderId = moment(date).format('DDHHmmss');
+        let total = req.body.total;
+        let bankCode = 'VNBANK';
+
+        let locale = 'vn';
+        if (locale === null || locale === '') {
+            locale = 'vn';
+        }
+        let currCode = 'VND';
+        let vnp_Params = {};
+        vnp_Params['vnp_Version'] = '2.1.0';
+        vnp_Params['vnp_Command'] = 'pay';
+        vnp_Params['vnp_TmnCode'] = tmnCode;
+        vnp_Params['vnp_Locale'] = locale;
+        vnp_Params['vnp_CurrCode'] = currCode;
+        vnp_Params['vnp_TxnRef'] = orderId;
+        vnp_Params['vnp_OrderInfo'] = 'Thanh toan cho ma GD:' + orderId;
+        vnp_Params['vnp_OrderType'] = 'other';
+        vnp_Params['vnp_Amount'] = total * 100;
+        vnp_Params['vnp_ReturnUrl'] = returnUrl;
+        vnp_Params['vnp_IpAddr'] = ipAddr;
+        vnp_Params['vnp_CreateDate'] = createDate;
+        if (bankCode !== null && bankCode !== '') {
+            vnp_Params['vnp_BankCode'] = bankCode;
+        }
+
+        vnp_Params = indexController.sortObject(vnp_Params);
+
+        let querystring = require('qs');
+        let signData = querystring.stringify(vnp_Params, { encode: false });
+        let crypto = require('crypto');
+        let hmac = crypto.createHmac('sha512', secretKey);
+        let signed = hmac.update(new Buffer(signData, 'utf-8')).digest('hex');
+        vnp_Params['vnp_SecureHash'] = signed;
+        vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
+
+        res.redirect(vnpUrl);
+    }
+
+    vnpay_return(req, res, next) {
+        let vnp_Params = req.query;
+
+        let secureHash = vnp_Params['vnp_SecureHash'];
+
+        delete vnp_Params['vnp_SecureHash'];
+        delete vnp_Params['vnp_SecureHashType'];
+
+        vnp_Params = indexController.sortObject(vnp_Params);
+
+        let config = require('config');
+        let tmnCode = config.get('vnp_TmnCode');
+        let secretKey = config.get('vnp_HashSecret');
+
+        let querystring = require('qs');
+        let signData = querystring.stringify(vnp_Params, { encode: false });
+        let crypto = require('crypto');
+        let hmac = crypto.createHmac('sha512', secretKey);
+        let signed = hmac.update(new Buffer(signData, 'utf-8')).digest('hex');
+
+        if (secureHash === signed) {
+            //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
+
+            //   res.render("client/success", {
+            //     headclient: true,
+            //     showNavbarClient: true,
+            //     showFooterClient: true,
+            //     jsclient: true,
+            //     code: vnp_Params["vnp_ResponseCode"],
+            //     username: req.session.username,
+            //     cartuserid: req.session.cartuserid,
+            //   });
+            indexController.Static_submit_checkout(req, res, next);
+        } else {
+            res.render('client/success', {
+                headclient: true,
+                showNavbarClient: true,
+                showFooterClient: true,
+                jsclient: true,
+                code: '97',
+                username: req.session.username,
+                cartuserid: req.session.cartuserid,
+            });
+        }
+    }
+
+    refund(req, res, next) {
+        process.env.TZ = 'Asia/Ho_Chi_Minh';
+        let date = new Date();
+
+        let config = require('config');
+        let crypto = require('crypto');
+
+        let vnp_TmnCode = config.get('vnp_TmnCode');
+        let secretKey = config.get('vnp_HashSecret');
+        let vnp_Api = config.get('vnp_Api');
+
+        let vnp_TxnRef = req.body.orderId;
+        let vnp_TransactionDate = req.body.transDate;
+        let vnp_Amount = req.body.amount * 100;
+        let vnp_TransactionType = req.body.transType;
+        let vnp_CreateBy = req.body.user;
+
+        let currCode = 'VND';
+
+        let vnp_RequestId = moment(date).format('HHmmss');
+        let vnp_Version = '2.1.0';
+        let vnp_Command = 'refund';
+        let vnp_OrderInfo = 'Hoan tien GD ma:' + vnp_TxnRef;
+
+        let vnp_IpAddr =
+            req.headers['x-forwarded-for'] ||
+            req.connection.remoteAddress ||
+            req.socket.remoteAddress ||
+            req.connection.socket.remoteAddress;
+
+        let vnp_CreateDate = moment(date).format('YYYYMMDDHHmmss');
+
+        let vnp_TransactionNo = '0';
+
+        let data =
+            vnp_RequestId +
+            '|' +
+            vnp_Version +
+            '|' +
+            vnp_Command +
+            '|' +
+            vnp_TmnCode +
+            '|' +
+            vnp_TransactionType +
+            '|' +
+            vnp_TxnRef +
+            '|' +
+            vnp_Amount +
+            '|' +
+            vnp_TransactionNo +
+            '|' +
+            vnp_TransactionDate +
+            '|' +
+            vnp_CreateBy +
+            '|' +
+            vnp_CreateDate +
+            '|' +
+            vnp_IpAddr +
+            '|' +
+            vnp_OrderInfo;
+        let hmac = crypto.createHmac('sha512', secretKey);
+        let vnp_SecureHash = hmac
+            .update(new Buffer(data, 'utf-8'))
+            .digest('hex');
+
+        let dataObj = {
+            vnp_RequestId: vnp_RequestId,
+            vnp_Version: vnp_Version,
+            vnp_Command: vnp_Command,
+            vnp_TmnCode: vnp_TmnCode,
+            vnp_TransactionType: vnp_TransactionType,
+            vnp_TxnRef: vnp_TxnRef,
+            vnp_Amount: vnp_Amount,
+            vnp_TransactionNo: vnp_TransactionNo,
+            vnp_CreateBy: vnp_CreateBy,
+            vnp_OrderInfo: vnp_OrderInfo,
+            vnp_TransactionDate: vnp_TransactionDate,
+            vnp_CreateDate: vnp_CreateDate,
+            vnp_IpAddr: vnp_IpAddr,
+            vnp_SecureHash: vnp_SecureHash,
+        };
+
+        request(
+            {
+                url: vnp_Api,
+                method: 'POST',
+                json: true,
+                body: dataObj,
+            },
+            function (error, response, body) {
+                console.log(response);
+            },
+        );
     }
 
     thanks(req, res) {

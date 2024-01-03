@@ -28,6 +28,7 @@ class orderController {
                     order_sdt: order.shipping.phone,
                     order_address: order.shipping.address,
                     order_status: order.status,
+                    order_method: order.shipping.method,
                     order_time: order.created_at,
                 };
 

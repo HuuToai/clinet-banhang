@@ -21,6 +21,7 @@
                                         <th>SĐT </th>
                                         <th>Địa chỉ</th>
                                         <th>Trạng thái</th>
+                                        <th>Phương thức thanh toán</th>
                                         <th> Cập nhật Trạng thái</th>
                                         <th>Chức năng</th>
                                     </tr>
@@ -44,33 +45,9 @@
                                             <span class="text text-danger">Đã Hủy</span>
                                             {{/if}}
                                         </td>
+                                        <td>{{this.order_method}}</td>
 
                                         <td>
-                                            {{!-- <form action="/admin/order/process" name="status-form" method="post"
-                                                id="orderForm">
-                                                <select class="xulydonhang form-control" id="orderSelect" name="status">
-                                                    {{#if (eq this.order_status 1)}}
-                                                    <option selected value="0">---Xử Lý Đơn Hàng---</option>
-                                                    <option value="2">Đơn Hàng Đã Được Xử Lý</option>
-                                                    <option value="3">Đã Hủy</option>
-                                                    {{else if (eq this.order_status 2)}}
-                                                    <option value="0">--Xử Lý Đơn Hàng--</option>
-                                                    <option selected value="2">Đơn Hàng Đã Được Xử Lý</option>
-                                                    <option value="3">Đã Hủy</option>
-                                                    {{else}}
-                                                    <option value="0">--Xử Lý Đơn Hàng--</option>
-                                                    <option value="2">Đơn Hàng Đã Được Xử Lý</option>
-                                                    <option selected value="3">Đã Hủy</option>
-                                                    {{/if}}
-                                                </select>
-
-                                                <!-- Thêm trường ẩn để giữ order_code -->
-                                                <input name="order_code" type="hidden" id="orderCode"
-                                                    value="{{this.order_code}}">
-
-                                                <!-- Sửa type của button thành "submit" để gửi form khi nút được nhấn -->
-                                                <button id="btn-status" type="submit">Gui</button>
-                                            </form> --}}
                                             <select class="xulydonhang form-control" data-order-id="{{this.order_id}}">
                                                 {{#if (eq this.order_status 1)}}
                                                 <option selected value="0" id="{{this.order_code}}">--Xử Lý Đơn Hàng--

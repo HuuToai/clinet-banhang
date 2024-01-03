@@ -17,7 +17,7 @@
 
 <div class="untree_co-section">
     <div class="container">
-        <form action="/submit-checkout" method="post">
+        <form name="checkout-vnpay-form" action="/submit-checkout" method="post">
             <div class="row">
                 <div class="col-md-6 mb-5 mb-md-0">
                     <h2 class="h3 mb-3 text-black">Chi tiết thanh toán</h2>
@@ -52,6 +52,7 @@
                             <textarea name="note" id="c_order_notes" cols="30" rows="5" class="form-control"
                                 placeholder="hãy viết vào ghi chú của bạn..."></textarea>
                         </div>
+                        <input hidden type="text" name="total" value="{{total}}">
 
                     </div>
                 </div>
@@ -92,12 +93,19 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group">
+                                <div style="display: inline-block;" class="form-group">
                                     {{!-- <button class="btn btn-black btn-lg py-3 btn-block"
                                         onclick="window.location='/submit-checkout'">Đặt
                                         hàng</button> --}}
-                                    <button type="submit">Submit</button>
+                                    <button class="btn btn-danger" type="submit">Đặt Hàng</button>
                                 </div>
+                                <div style="display: inline-block;" class="form-group">
+                                    <button hidden id="btn-vnpay" type="button" class="btn btn-danger">Thanh toán
+                                        VNPAY <i
+                                            style="display: inline-block; width: 70px; height: 24px; background-size: contain; background-position: center; background-repeat: no-repeat; background-image: url('https://cdn.haitrieu.com/wp-content/uploads/2022/10/Icon-VNPAY-QR.png');"></i></button>
+                                </div>
+
+
 
                             </div>
                         </div>
@@ -108,3 +116,44 @@
         </form>
     </div>
 </div>
+
+
+<!-- Thêm mã script vào cuối phần head hoặc cuối thẻ body -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Chọn phần tử HTML của select
+        var paymentMethodSelect = document.getElementById('hinhthucthanhtoan');
+
+        // Chọn phần tử HTML của nút submit
+        var submitButton = document.querySelector('button[type="submit"]');
+        var submitButton2 = document.querySelector('button[type="button"]');
+        // Thêm sự kiện khi giá trị của select thay đổi
+        paymentMethodSelect.addEventListener('change', function () {
+            // Nếu phương thức thanh toán là VNPAY
+            if (paymentMethodSelect.value === 'vnpay') {
+                // Tắt nút submit
+                submitButton.hidden = true;
+                submitButton2.hidden = false;
+            } else {
+                // Bật nút submit
+                submitButton.hidden = false;
+                submitButton2.hidden = true;
+
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var vnpayform = document.forms['checkout-vnpay-form'];
+        var btnvnpay = document.getElementById('btn-vnpay');
+
+        //when delete admin btn click
+        btnvnpay.onclick = function (event) {
+            vnpayform.action = 'create-payment-url';//set thêm action cho form
+            vnpayform.submit();
+        }
+    });
+
+</script>
