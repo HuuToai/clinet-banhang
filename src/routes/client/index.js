@@ -11,6 +11,7 @@ router.get('/shop', indexController.shop);
 router.use(checklogin);
 router.get('/about', indexController.about);
 router.get('/services', indexController.services);
+router.get('/:id/update_status', indexController.update_status);
 router.get('/:id/viewDetailhistory', indexController.viewDetailhistory);
 router.get('/blog', indexController.blog);
 router.get('/contact', indexController.contact);
@@ -24,6 +25,9 @@ router.get('/delete-cart', indexController.deletecart);
 router.get('/cart', indexController.cart);
 router.get('/checkout', indexController.checkout);
 router.post('/submit-checkout', indexController.submit_checkout);
+router.post('/create-payment-url', indexController.create_payment_url);
+router.get('/vnpay_return', indexController.vnpay_return);
+router.post('/refund', indexController.refund);
 router.get('/thanks', indexController.thanks);
 
 router.get('/', indexController.index);

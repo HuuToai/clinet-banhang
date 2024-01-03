@@ -107,6 +107,12 @@
                                             {{/if}}
                                         </td>
                                         <td>
+                                            {{#if (eq this.order_status 1)}}
+                                            <a href="/{{this.order_id}}/update_status" className="btn btn-link">hủy đơn
+                                                hàng</a>
+                                            {{/if}}
+                                        </td>
+                                        <td>
                                             <a href="/{{this.order_code}}/viewDetailhistory?q={{this.order_id}}"
                                                 className="btn btn-link">Chi
                                                 tiết
