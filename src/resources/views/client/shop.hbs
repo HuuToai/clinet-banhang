@@ -78,7 +78,7 @@
                     <img src="{{ window.location.origin }}/uploads/products/{{this.image}}"
                         class="img-fluid product-thumbnail">
                     <h3 class="product-title">{{this.name}}</h3>
-                    <strong class="product-price">{{this.price}} VNĐ</strong>
+                    <strong class="product-price">{{formatPrice this.price}}</strong>
                     <div class="product " data-product-id="{{this.id}}">
                         <span class="icon-cross" onclick="addToCart('{{this.id}}')">
                             <img src="/client/images/cross.svg" class="img-fluid">

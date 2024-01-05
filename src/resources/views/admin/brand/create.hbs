@@ -21,33 +21,30 @@
       <div class="row">
         <div class="col-lg-12">
           <form action="/admin/brand/store" method="POST" enctype="multipart/form-data" class="form-horizontal">
-            <div class="form-group row">
-              <label for="eexampleSelect3" class="col-md-2 col-form-label">Tên Thương hiệu</label>
-              <div class="col-md-10">
-                <input id="eexampleSelect3" type="text" class="form-control" placeholder="Nhập tên Thương hiệu"
-                  name="name" />
-                {{#if errors.length}}
-                <ul>
-                  {{#each errors}}
-                  <li>{{this}}</li>
-                  {{/each}}
-                </ul>
-                {{/if}}
-              </div>
+            <div class="form-group has-danger">
+              <label class="form-label mt-4" for="inputInvalid">Tên Thương hiệu</label>
+              <input type="text" name="name" placeholder="Nhập tên Thương hiệu" class="form-control">
+              {{#if errors }}
+              <div class="invalid-feedback">{{errors.name.msg}}</div>
+              {{/if}}
             </div>
             <div class="form-group">
               <label for="eexampleSelect12">Ảnh Thương hiệu</label>
-              <input name="image" type="file" value="{{formData.name}}" class="filestyle" id="eexampleSelect12 ">
+              <input name="image" type="file" class="filestyle" id="eexampleSelect12 ">
+              {{#if errors }}
+              <div class="invalid-feedback">{{errors.image.msg}}</div>
+              {{/if}}
             </div>
             <div class="form-group row">
               <label for="example-textarea">
                 Mô tả Thương hiệu
               </label>
-              <div>
-                <textarea name="description" class="form-control" rows="5" id="example-textarea"></textarea>
-              </div>
+              <textarea name="description" rows="5" id="example-textarea"></textarea>
+              {{#if errors }}
+              <div class="invalid-feedback">{{errors.description.msg}}</div>
+              {{/if}}
             </div>
-            <div class=" col-lg-12 form-group row">
+            <div class="form-group">
               <label for="exampleSelect1">Tình trạng</label>
               <select class="form-control" name="status" id="eexampleSelect1">
                 <option value="1">Kích hoạt</option>
@@ -58,6 +55,30 @@
               <button class="btn btn-primary" type="submit">Thêm mới Thương hiệu</button>
             </div>
           </form>
+          {{!--
+          <form action="/admin/brand/store" enctype="multipart/form-data" method="post">
+            <label for="user">User</label>
+            <input type="text" name="user">
+            {{#if errors }}
+            <span class="text-danger">{{errors.user.msg}}</span>
+            {{/if}}
+            <label for="password">Mật khẩu</label>
+            <input type="text" name="password">
+            {{#if errors }}
+            <span class="text-danger">{{errors.password.msg}}</span>
+            {{/if}}
+            <label for="add">địa chỉ</label>
+            <input type="text" name="add">
+            {{#if errors}}
+            <span class="text-danger">{{errors.add.msg}}</span>
+            {{/if}}
+            <label for="image">ảnh</label>
+            <input type="file" name="image">
+            {{#if errors}}
+            <span class="text-danger">{{errors.image.msg}}</span>
+            {{/if}}
+            <button type="submit">Gửi</button>
+          </form> --}}
         </div>
 
       </div>

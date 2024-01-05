@@ -14,10 +14,10 @@
     <!-- Start Header/Navigation -->
 
 
-    <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+    <nav class="custom-navbar navbar navbar navbar-expand-md" arial-label="Furni navigation bar">
 
         <div class="container">
-            <a class="navbar-brand" href="/">PHT<span>.</span></a>
+            <a style="color: #fff;" class="navbar-brand" href="/">PHT<span>.</span></a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
                 aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +37,8 @@
                 </ul>
 
                 <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-                    <li><a class="nav-link" href="login">{{username}}<img src="/client/images/user.svg"></a></li>
+                    <li><a style="color: #fff;" class="nav-link" href="login">{{username}}<img
+                                src="/client/images/user.svg"></a></li>
                     <li><a class="nav-link" href="/cart"><img src="/client/images/cart.svg"></a></li>
                 </ul>
             </div>
@@ -50,20 +51,23 @@
 
         <div style="display: inline-block;" class="image_product">
             <!-- Hình ảnh sản phẩm -->
-            <img src=" {{ window.location.origin }}/uploads/products/{{product.image}}" alt="{{product.name}}"
+            <img style="max-height: 200px; max-width:200px"
+                src=" {{ window.location.origin }}/uploads/products/{{product.image}}" alt="{{product.name}}"
                 class="img-fluid mb-4">
 
         </div>
-        <!-- Giá sản phẩm -->
-        <p><strong>Giá:</strong> {{formatPrice product.price}}</p>
+        <div style="display: inline-block;">
+            <!-- Giá sản phẩm -->
+            <p><strong>Giá:</strong> {{formatPrice product.price}}</p>
 
-        <!-- Mô tả sản phẩm -->
-        <p><strong>Mô tả:</strong> {{product.description}}</p>
+            <!-- Mô tả sản phẩm -->
+            <p style="max-width: 40%; "><strong>Mô tả:</strong> {{product.description}}</p>
 
-        <!-- Nút "Thêm vào giỏ hàng" -->
-        <a href="/{{product.id}}/add-to-cart" class="btn btn-primary">Thêm vào giỏ hàng</a>
+            <!-- Nút "Thêm vào giỏ hàng" -->
+            <a href="/{{product.id}}/add-to-cart" class="btn btn-primary">Thêm vào giỏ hàng</a>
 
-        <!-- Thêm các thành phần khác tùy thuộc vào yêu cầu của bạn -->
+            <!-- Thêm các thành phần khác tùy thuộc vào yêu cầu của bạn -->
+        </div>
 
     </div>
 

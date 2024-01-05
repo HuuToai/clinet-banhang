@@ -55,7 +55,7 @@
         <div class="row justify-content-between">
             <div class="col-lg-5">
                 <div class="intro-excerpt">
-                    <h1>Shop PHT <span clsas="d-block">thiết kế nội thất</span></h1>
+                    <h1>Shop PHT <span clsas="d-block">cửa hàng đồng hồ</span></h1>
                     <p class="mb-4">Hãy là những người có lựa chọn sáng suốt và thông minh nhất, thông thái nhất và lựa
                         chọn tốt nhất trong tầm giá và sự uy tín hàng đầu</p>
                     <p><a href="" class="btn btn-secondary me-2">Đến cửa hàng</a><a href="/shop"
@@ -64,7 +64,7 @@
             </div>
             <div class="col-lg-7">
                 <div class="hero-img-wrap">
-                    <img src="/client/images/couch.png" class="img-fluid">
+                    <img src="/client/images/home.png" class="img-fluid">
                 </div>
             </div>
         </div>
@@ -93,7 +93,7 @@
                     <img src="{{ window.location.origin }}/uploads/products/{{this.image}}"
                         class="img-fluid product-thumbnail">
                     <h3 class="product-title">{{this.name}}</h3>
-                    <strong class="product-price">{{this.price}} VNĐ</strong>
+                    <strong class="product-price">{{formatPrice this.price}}</strong>
 
                     <span class="icon-cross">
                         <img src="/client/images/cross.svg" class="img-fluid">
