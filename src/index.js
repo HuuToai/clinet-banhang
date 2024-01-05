@@ -82,8 +82,6 @@ app.engine(
 app.set('view engine', 'hbs');
 
 app.set('views', path.join(__dirname, 'resources', 'views')); //sửa lại nếu máy mac /
-
-console.log(__dirname + '/resources/views');
 //router init
 route(app);
 app.listen(port, () =>

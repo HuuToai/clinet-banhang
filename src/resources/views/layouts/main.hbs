@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 {{#if headadmin}}
+{{/if}}
 
 <head>
     <meta charset="utf-8">
@@ -26,11 +27,11 @@
     <link rel="stylesheet" href="/src/public/css/app.css">
 
     {{!-- thêm thông báo đặt xg dưới để k bị ghi đè --}}
+
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
 </head>
-{{/if}}
 {{#if headclient}}
 
 <head>
@@ -50,9 +51,10 @@
     <link href="/client/css/style.css" rel="stylesheet">
 
     {{!-- Thông báo toastr --}}
+    {{!--
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script> --}}
 </head>
 {{/if}}
 
@@ -60,14 +62,9 @@
 <body>
     <div class="app">
         <div id="wrapper">
-            {{!-- {{#if message.success}}
-            <div class="alert alert-success">{{message.success}}</div>
-            {{/if}}
-            {{#if message.error}}
-            <div class="alert alert-danger">{{message.error}}</div>
-            {{/if}} --}}
-
             {{{ toastr }}}
+
+
 
             <!-- Topbar Start -->
             {{#if showNavbar}}
@@ -88,6 +85,16 @@
 
             {{> client-navbar}}
             {{/if}}
+
+            <div class="content-page">
+                {{#if errors.length}}
+                {{#each errors}}
+                <div class="alert alert-danger" role="alert">
+                    <strong>Không được để trống:</strong> {{this.msg}}
+                </div>
+                {{/each}}
+                {{/if}}
+            </div>
             {{{body}}}
             {{#if showFooterClient}}
             {{> client-footer}}

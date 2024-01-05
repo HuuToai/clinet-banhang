@@ -2,9 +2,10 @@ const Brand = require('../../models/admin/brandModel');
 const sequelize = require('../../../config/sequelize');
 const { Op } = require('sequelize');
 // const { body, check } = require("express-validator");
-const { validationResult } = require('express-validator');
 const uploadMiddleware = require('../../middleWare/uploadMiddleware');
 const multer = require('multer');
+const { check, validationResult } = require('express-validator');
+
 // const { validationResult } = require("express-validator");
 class brandController {
     // [GET] /news
@@ -39,6 +40,7 @@ class brandController {
 
     create(req, res) {
         res.render('admin/brand/create', {
+            errors: '',
             headadmin: true,
             jsadmin: true,
             showSlider: true,
@@ -49,41 +51,55 @@ class brandController {
         });
     }
     // Middleware để xử lý yêu cầu tạo mới thương hiệu
-    store(req, res, next) {
-        // Sử dụng middleware upload.single('image') để xử lý việc tải lên ảnh
-        uploadMiddleware.single('image')(req, res, function (err) {
-            if (err instanceof multer.MulterError) {
-                // Xử lý lỗi từ Multer (ví dụ: file quá lớn)
-                console.error('Multer error:', err);
-                return res.status(400).send('Multer error');
-            } else if (err) {
-                // Xử lý lỗi khác
-                console.error('Error:', err);
-                return res.status(500).send('Internal Server Error');
-            }
+    store(req, res) {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.render('admin/brand/create', {
+                errors: errors.array(),
+                headadmin: true,
+                jsadmin: true,
+                showSlider: true,
+                showNavbar: true,
+                showRightBar: true,
+                user: req.session.user,
+                name: req.session.name,
+            });
+        } else {
+            // Sử dụng middleware upload.single('image') để xử lý việc tải lên ảnh
+            uploadMiddleware.single('image')(req, res, function (err) {
+                if (err instanceof multer.MulterError) {
+                    // Xử lý lỗi từ Multer (ví dụ: file quá lớn)
+                    console.error('Multer error:', err);
+                    return res.status(400).send('Multer error');
+                } else if (err) {
+                    // Xử lý lỗi khác
+                    console.error('Error:', err);
+                    return res.status(500).send('Internal Server Error');
+                }
 
-            // Nếu không có lỗi, thêm vào cơ sở dữ liệu
-            const brand = {
-                name: req.body.name,
-                description: req.body.description,
-                image: req.file ? req.file.filename : null, // Lưu tên file ảnh vào cơ sở dữ liệu
-                status: req.body.status,
-                createdBy: req.session.name,
-                updatedBy: req.session.name,
-            };
+                // Nếu không có lỗi, thêm vào cơ sở dữ liệu
+                const brand = {
+                    name: req.body.name,
+                    description: req.body.description,
+                    image: req.file ? req.file.filename : null, // Lưu tên file ảnh vào cơ sở dữ liệu
+                    status: req.body.status,
+                    createdBy: req.session.name,
+                    updatedBy: req.session.name,
+                };
 
-            // Thực hiện thêm vào cơ sở dữ liệu
-            Brand.create(brand)
-                .then(() => {
-                    // Chuyển hướng người dùng sau khi thêm thành công
-                    res.redirect('/admin/brand');
-                })
-                .catch((error) => {
-                    // Xử lý lỗi khi thêm vào cơ sở dữ liệu
-                    console.error('Error creating brand:', error);
-                    next(error); // Chuyển lỗi cho middleware xử lý lỗi tiếp theo
-                });
-        });
+                // Thực hiện thêm vào cơ sở dữ liệu
+                Brand.create(brand)
+                    .then(() => {
+                        // Chuyển hướng người dùng sau khi thêm thành công
+                        res.redirect('/admin/brand');
+                    })
+                    .catch((error) => {
+                        // Xử lý lỗi khi thêm vào cơ sở dữ liệu
+                        console.error('Error creating brand:', error);
+                        // next(error); // Chuyển lỗi cho middleware xử lý lỗi tiếp theo
+                    });
+            });
+        }
     }
 
     edit(req, res, next) {
